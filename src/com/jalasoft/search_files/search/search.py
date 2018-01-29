@@ -1,12 +1,26 @@
 from  src.com.jalasoft.search_files.search.directory import Directory
+from  src.com.jalasoft.search_files.search.file import  File
+import os
+
 
 class Search(object):
     def __init__(self, base_path):
         self.base_path = base_path
         self.directory = Directory()
+        self.file = File("", "", "", "")
+
 
     def search_all_directories(self):
-        self.directory.show_all_directories(self.base_path)
+        list_asset = []
+        for root, directories, files in os.walk(self.base_path):
+            for dirs in directories:
+                dir_all = os.path.join(root, dirs)
+                list_asset.append(dir_all)
+            for file in files:
+                file = os.path.join(root, file)
+                list_asset.append(file)
+        return list_asset
+
 
     def search_all_files(self):
         pass
@@ -36,5 +50,5 @@ class Search(object):
         pass
 
 if __name__ == "__main__":
-    search = Search("C:\\Program Files")
-    search.search_all_directories()
+    search = Search("C:\\test")
+    print(search.search_all_directories())

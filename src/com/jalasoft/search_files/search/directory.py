@@ -4,22 +4,16 @@ from  src.com.jalasoft.search_files.search.asset import Asset
 class Directory(Asset):
     def __init__(self):
         Asset.__init__(self, "", "", "")
-        self.children = []
+        self.is_directory = False
 
-    def append_child(self, child):
-        self.children.append(child)
+    def set_directory_name(self, directory_name):
+        self.directory_name = directory_name
 
-    def remove_child(self, child):
-        self.children.remove(child)
+    def get_directory_name(self):
+       return  self.directory_name
 
-    def get_children_number(self):
-        return len(self.children)
+    def get_is_directory(self):
+       return  self.get_is_directory
 
-    def get_all_files(self, base_path):
-        pass
-
-    def show_all_directories(self, base_path):
-        for root, directories, files in os.walk(base_path):
-            for dirs in directories:
-                dir_all = os.path.join(root, dirs)
-                print(dir_all)
+    def set_is_directory(self, is_directory ):
+        self.is_directory = is_directory
