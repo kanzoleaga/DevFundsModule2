@@ -3,10 +3,10 @@
 # Import the modules needed to run the script.
 import sys
 import os
+from src.com.jalasoft.search_files.utils.validator import *
 
 # Main definition - constants
 menu_actions = {}
-
 
 # =======================
 #     MENUS FUNCTIONS
@@ -17,10 +17,10 @@ def main_menu():
     os.system("cls")
 
     print("Welcome,\n")
-    print ("Please choose the menu you want to start:")
-    print ("1. Search Path")
-    print ("2. Serach File")
-    print ("\n0. Quit")
+    print("Please choose the menu you want to start:")
+    print("1. Search Path")
+    print("2. Search File")
+    print("\n0. Quit")
     choice = input(" >>  ")
     exec_menu(choice)
 
@@ -34,6 +34,9 @@ def exec_menu(choice):
     if ch == '':
         menu_actions['main_menu']()
     else:
+        if is_number(ch) and is_in_range(ch, ****):
+            if ()
+
         try:
             menu_actions[ch]()
         except KeyError:
@@ -42,23 +45,23 @@ def exec_menu(choice):
             menu_actions['main_menu']()
     return
 
-
 # Menu 1
 def menu1():
-    print ("path found !\n")
-    print ("9. Back")
-    print ("0. Quit")
+    print("1. Find all files form a path \n")
+    print("2. Find all dirs from a path \n")
+    print("3. Find all file and folders from a path")
+    print("9. Back")
+    print("0. Quit")
     choice = input(" >>  ")
     exec_menu(choice)
     return
 
-
 # Menu 2
 def menu2():
-    print ("File foundd"
-           " !\n")
-    print ("9. Back")
-    print ("0. Quit")
+    print("File foundd"
+          " !\n")
+    print("9. Back")
+    print("0. Quit")
     choice = input(" >>  ")
     exec_menu(choice)
     return
