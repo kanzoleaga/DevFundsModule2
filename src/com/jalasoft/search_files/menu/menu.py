@@ -129,51 +129,73 @@ def menu3():
 # Menu1 Actions:
 def find_all_assets():
     path = input("Enter the path >>  ")
+    while not os.path.isdir(path):
+        path = input("Invalid path. Please enter a valid path >>  ")
     print("Find all assets was selected. Starting the searching process in", path)
     menu1()
 
 def find_assets_by_name():
     path = input("Enter the path >>  ")
+    while not os.path.isdir(path):
+        path = input("Invalid path. Please enter a valid path >>  ")
     name = input("Enter the name of the asset>>  ")
     print("Find all assets by name was selected. Starting the searching process ...")
     menu1()
 
 def find_assets_by_size():
     path = input("Enter the path >>  ")
-    size = input("Enter the size of the name of the asset>>  ")
-    print("Find all assets by name was selected. Starting the searching process ...")
+    while not os.path.isdir(path):
+        path = input("Invalid path. Please enter a valid path >>  ")
+    size = input("Enter the size of the asset>>  ")
+    while not is_number(size):
+        size = input("Invalid size. Please enter a number >>  ")
+    print("Find all assets by size was selected. Starting the searching process ...")
     menu1()
 
 # Menu2 Actions:
 def find_files_by_extetion():
     path = input("Enter the path >>  ")
-    ext = input("Enter the extention >>  ")
-    print("Find all files by extention was selected. Starting the searching process ...")
+    while not os.path.isdir(path):
+        path = input("Invalid path. Please enter a valid path >>  ")
+    ext = input("Enter the extension >>  ")
+    print("Find all files by extension was selected. Starting the searching process ...")
     menu2()
 
 
 def find_files_by_name():
     path = input("Enter the path >>  ")
-    ext = input("Enter file name >>  ")
+    while not os.path.isdir(path):
+        path = input("Invalid path. Please enter a valid path >>  ")
+    name = input("Enter file name >>  ")
     print("Find all files by name was selected. Starting the searching process ...")
     menu2()
 
 def find_files_by_size():
     path = input("Enter the path >>  ")
-    ext = input("Enter the size >>  ")
+    while not os.path.isdir(path):
+        path = input("Invalid path. Please enter a valid path >>  ")
+    size = input("Enter the size of the file >>  ")
+    while not is_number(size):
+        size = input("Invalid size. Please enter a number >>  ")
     print("Find all files by size was selected. Starting the searching process ...")
     menu2()
 
 # Menu3 Actions:
 def find_folders_by_name():
     path = input("Enter the path >>  ")
-    ext = input("Enter the folder name >>  ")
+    while not os.path.isdir(path):
+        path = input("Invalid path. Please enter a valid path >>  ")
+    name = input("Enter the folder name >>  ")
     print("Find folders by name was selected. Starting the searching process ...")
     menu3()
 
 def find_folders_by_size():
     path = input("Enter the path >>  ")
-    ext = input("Enter the folder size >>  ")
+    while not os.path.isdir(path):
+        path = input("Invalid path. Please enter a valid path >>  ")
+    size = input("Enter the folder size >>  ")
+    while not is_number(size):
+        size = input("Invalid size. Please enter a number >>  ")
     print("Find folders by size was selected. Starting the searching process ...")
     menu3()
 
