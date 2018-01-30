@@ -7,6 +7,10 @@ from src.com.jalasoft.search_files.utils.validator import *
 
 # Main definition - constants
 menu_actions = {}
+menu1_actions = {}
+menu2_actions = {}
+menu3_actions = {}
+
 
 # =======================
 #     MENUS FUNCTIONS
@@ -27,7 +31,7 @@ def main_menu():
     return
 
 
-# Execute menu
+# Execute main menu
 def exec_menu(choice):
     os.system("cls")
     ch = choice.lower()
@@ -37,33 +41,60 @@ def exec_menu(choice):
         try:
             menu_actions[ch]()
         except KeyError:
-            print
-            "Invalid selection, please try again.\n"
+            print("Invalid selection, please try again.\n")
             menu_actions['main_menu']()
     return
 
-# Execute menu
+# Execute menu1
 def exec_menu1(choice):
     os.system("cls")
     ch = choice.lower()
     if ch == '':
-        menu_actions['main_menu']()
+        menu1_actions['main_menu']()
     else:
         try:
             menu1_actions[ch]()
         except KeyError:
+            print("Invalid selection, please try again.\n")
+            menu1_actions['main_menu']()
+    return
+
+def exec_menu2(choice):
+    os.system("cls")
+    ch = choice.lower()
+    if ch == '':
+        menu2_actions['main_menu']()
+    else:
+        try:
+            menu2_actions[ch]()
+        except KeyError:
+            print("Invalid selection, please try again.\n")
+            menu2_actions['main_menu']()
+    return
+
+# Execute menu1
+def exec_menu3(choice):
+    os.system("cls")
+    ch = choice.lower()
+    if ch == '':
+        menu3_actions['main_menu']()
+    else:
+        try:
+            menu3_actions[ch]()
+        except KeyError:
             print
             "Invalid selection, please try again.\n"
-            menu_actions['main_menu']()
+            menu3_actions['main_menu']()
     return
+
 
 # Menu 1
 def menu1():
-    _ = os.system("cls")
+    _= os.system("cls")
     print("Searching for assets \n")
     print("1. Find all assets")
     print("2. Find assets by name")
-    print("2. Find assets by size")
+    print("3. Find assets by size")
     print("9. Back")
     print("0. Quit")
     choice = input(" >>  ")
@@ -72,7 +103,7 @@ def menu1():
 
 # Menu 2
 def menu2():
-    os.system("cls")
+    _= os.system("cls")
     print("Searching for files \n")
     print("1. Find files by extension")
     print("2. Find files by name")
@@ -80,7 +111,7 @@ def menu2():
     print("9. Back")
     print("0. Quit")
     choice = input(">>  ")
-    exec_menu(choice)
+    exec_menu2(choice)
     return
 
 # Menu 3
@@ -92,18 +123,59 @@ def menu3():
     print("9. Back")
     print("0. Quit")
     choice = input(" >>  ")
-    exec_menu(choice)
+    exec_menu3(choice)
     return
 
+# Menu1 Actions:
 def find_all_assets():
-    path = input(" Enter the path >>  ")
+    path = input("Enter the path >>  ")
     print("Find all assets was selected. Starting the searching process in", path)
+    menu1()
 
 def find_assets_by_name():
+    path = input("Enter the path >>  ")
+    name = input("Enter the name of the asset>>  ")
     print("Find all assets by name was selected. Starting the searching process ...")
+    menu1()
 
-def find_assets_by_size ():
-    pass
+def find_assets_by_size():
+    path = input("Enter the path >>  ")
+    size = input("Enter the size of the name of the asset>>  ")
+    print("Find all assets by name was selected. Starting the searching process ...")
+    menu1()
+
+# Menu2 Actions:
+def find_files_by_extetion():
+    path = input("Enter the path >>  ")
+    ext = input("Enter the extention >>  ")
+    print("Find all files by extention was selected. Starting the searching process ...")
+    menu2()
+
+
+def find_files_by_name():
+    path = input("Enter the path >>  ")
+    ext = input("Enter file name >>  ")
+    print("Find all files by name was selected. Starting the searching process ...")
+    menu2()
+
+def find_files_by_size():
+    path = input("Enter the path >>  ")
+    ext = input("Enter the size >>  ")
+    print("Find all files by size was selected. Starting the searching process ...")
+    menu2()
+
+# Menu3 Actions:
+def find_folders_by_name():
+    path = input("Enter the path >>  ")
+    ext = input("Enter the folder name >>  ")
+    print("Find folders by name was selected. Starting the searching process ...")
+    menu3()
+
+def find_folders_by_size():
+    path = input("Enter the path >>  ")
+    ext = input("Enter the folder size >>  ")
+    print("Find folders by size was selected. Starting the searching process ...")
+    menu3()
 
 # Back to main menu
 def back():
@@ -125,14 +197,32 @@ menu_actions = {
     '1': menu1,
     '2': menu2,
     '3': menu3,
-    '9': back,
     '0': exit,
 }
 
 menu1_actions = {
+    'main_menu': menu1,
     '1': find_all_assets,
     '2': find_assets_by_name,
     '3': find_assets_by_size,
+    '9': back,
+    '0': exit,
+}
+
+
+menu2_actions = {
+    'main_menu': menu2,
+    '1': find_files_by_extetion,
+    '2': find_files_by_name,
+    '3': find_files_by_size,
+    '9': back,
+    '0': exit,
+}
+
+menu3_actions = {
+    'main_menu': menu3,
+    '1': find_folders_by_name,
+    '2': find_folders_by_size,
     '9': back,
     '0': exit,
 }
