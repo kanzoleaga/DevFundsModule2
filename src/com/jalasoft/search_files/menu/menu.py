@@ -56,7 +56,7 @@ def exec_menu1(choice):
             menu1_actions[ch]()
         except KeyError:
             print("Invalid selection, please try again.\n")
-            menu_actions['main_menu']()
+            menu1_actions['main_menu']()
     return
 
 def exec_menu2(choice):
@@ -80,7 +80,7 @@ def exec_menu3(choice):
         menu3_actions['main_menu']()
     else:
         try:
-            menu1_actions[ch]()
+            menu3_actions[ch]()
         except KeyError:
             print
             "Invalid selection, please try again.\n"
@@ -179,7 +179,7 @@ def find_folders_by_size():
 
 # Back to main menu
 def back():
-    menu_actions['main_menu']
+    menu_actions['main_menu']()
     #
     # if menu == "main_menu":
     #     menu_actions['main_menu']()
@@ -213,7 +213,7 @@ menu1_actions = {
     '1': find_all_assets,
     '2': find_assets_by_name,
     '3': find_assets_by_size,
-    '9': back(),
+    '9': back,
     '0': exit,
 }
 
@@ -223,7 +223,7 @@ menu2_actions = {
     '1': find_files_by_extetion,
     '2': find_files_by_name,
     '3': find_files_by_size,
-    '9': back(),
+    '9': back,
     '0': exit,
 }
 
@@ -231,7 +231,7 @@ menu3_actions = {
     'main_menu': menu3,
     '1': find_folders_by_name,
     '2': find_folders_by_size,
-    '9': back(),
+    '9': back,
     '0': exit,
 }
 
