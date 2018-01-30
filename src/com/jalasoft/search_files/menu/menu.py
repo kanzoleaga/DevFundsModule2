@@ -180,15 +180,7 @@ def find_folders_by_size():
 # Back to main menu
 def back():
     menu_actions['main_menu']()
-    #
-    # if menu == "main_menu":
-    #     menu_actions['main_menu']()
-    # elif menu == menu1:
-    #     menu1_actions['main_menu']()
-    # # elif menu == menu2:
-    # #     menu2_actions['main_menu']()
-    # # elif menu == menu3:
-    # #     menu3_actions['main_menu']
+
 
 # Exit program
 def exit():
