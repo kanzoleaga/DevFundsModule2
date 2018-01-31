@@ -13,7 +13,7 @@ class Asset(object):
         self.path = path
         self.name = name
         self.size = os.path.getsize(path)
-        self.is_directory = False
+        self.is_directory = os.path.isdir(path)
 
     def get_path(self):
         return self.path
@@ -22,10 +22,11 @@ class Asset(object):
         return self.size
 
     def get_is_directory(self):
-        return True
+        return self.is_directory
 
     def get_name(self):
         return self.name
 
-    def set_is_directory(self, asset):
-        self.is_directory = asset
+
+    # def set_is_directory(self, asset):
+    #     self.is_directory = asset
