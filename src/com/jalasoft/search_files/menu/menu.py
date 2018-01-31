@@ -10,7 +10,7 @@ menu_actions = {}
 menu1_actions = {}
 menu2_actions = {}
 menu3_actions = {}
-
+1
 
 # =======================
 #     MENUS FUNCTIONS
@@ -19,7 +19,6 @@ menu3_actions = {}
 # Main menu
 def main_menu():
     os.system("cls")
-    print("Welcome,\n")
     print("Please choose the option you want to start:")
     print("1. Search all assets from a path")
     print("2. Search all files in a path")
@@ -91,7 +90,7 @@ def exec_menu3(choice):
 # Menu 1
 def menu1():
     _= os.system("cls")
-    print("Searching for assets \n")
+    print("Searching for assets in a path \n")
     print("1. Find all assets")
     print("2. Find assets by name")
     print("3. Find assets by size")
@@ -104,7 +103,7 @@ def menu1():
 # Menu 2
 def menu2():
     _= os.system("cls")
-    print("Searching for files \n")
+    print("Searching for files in a path \n")
     print("1. Find files by extension")
     print("2. Find files by name")
     print("3. Find files by size")
@@ -117,7 +116,7 @@ def menu2():
 # Menu 3
 def menu3():
     os.system("cls")
-    print ("Sarching for folders \n")
+    print ("Sarching for folders in a path \n")
     print("1. Find folders by name")
     print("2. Find folders by size")
     print("9. Back")

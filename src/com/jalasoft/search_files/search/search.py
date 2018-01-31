@@ -30,13 +30,13 @@ class Search():
         for root, directories, files in os.walk(self.base_path):
             for dir in directories:
                 directory = Directory(os.path.join(root, dir), dir)
-                directory.set_is_directory(True)
+                #directory.set_is_directory(True)
                 result.append(os.path.join(self.base_path,directory.get_name()))
                 LOGGER.debug(self,'directories search', directory)
 
             for file in files:
-                file = File(os.path.join(root, file), file, "")
-                file.set_is_directory(False)
+                file = File(os.path.join(root, file), file)
+                print("ext: ", file.get_extension())
                 result.append(os.path.join(root,file.get_name()))
                 LOGGER.info('Doing something')
         return result
@@ -56,8 +56,9 @@ class Search():
         result = []
         for root, directories, files in os.walk(self.base_path):
             for file in files:
-                file = File(os.path.join(root, file), file, extension)
-                file.set_is_directory(False)
+                file = File(os.path.join(root, file), file)
+                print(file.get_extension())
+                #file.set_is_directory(False)
                 if file.get_name().endswith(file.get_extension()):
                     result.append(os.path.join(root, file.get_name()))
 
@@ -72,8 +73,8 @@ class Search():
         result = []
         for root, directories, files in os.walk(self.base_path):
             for file in files:
-                file = File(os.path.join(root, file), name, "")
-                file.set_is_directory(False)
+                file = File(os.path.join(root, file), name)
+                #file.set_is_directory(False)
         for file in os.listdir(self.base_path):
             if fnmatch.fnmatch(file, name):
                 result.append(file)
@@ -105,4 +106,4 @@ if __name__ == "__main__":
 
     print(search.search_files_and_directories())
     print(search.search_file_by_extension(".txt"))
-    print(search.searh_by_name("kate.*"))
+    print(search.searh_by_name("text.*"))
