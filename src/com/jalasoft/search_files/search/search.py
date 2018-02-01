@@ -8,8 +8,6 @@ import os
 import fnmatch
 from src.com.jalasoft.search_files.utils.logging_config import LOGGER as LOGGER
 
-
-
 class Search():
     def __init__(self, base_path):
         """
@@ -17,7 +15,6 @@ class Search():
         :param base_path: this parameter is main to search by any criteria
         """
         self.base_path = base_path
-
 
     def search_files_and_directories(self):
         """
