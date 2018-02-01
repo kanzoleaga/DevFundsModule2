@@ -130,7 +130,7 @@ class Menu():
         path = input("Enter full path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid full path >>  ")
-        print("Find all assets that were selected. Starting the searching process in ", path)
+        print("Find all assets from selected path. Starting the searching process in ", path)
         search = Search(path)
         print(search.search_files_and_directories())
 
