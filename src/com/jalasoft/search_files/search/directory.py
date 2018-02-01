@@ -1,19 +1,17 @@
-import os
+"""
+Directory class inheritance from Asset
+"""
 from  src.com.jalasoft.search_files.search.asset import Asset
 
 class Directory(Asset):
-    def __init__(self):
-        Asset.__init__(self, "", "", "")
-        self.is_directory = False
+    def __init__(self, path, name):
+        super().__init__(path, name)
+        self.child_dirs = []
 
-    def set_directory_name(self, directory_name):
-        self.directory_name = directory_name
+    # def set_dir_name(self, dir_name):
+    #     return self.dir_name
 
-    def get_directory_name(self):
-       return  self.directory_name
+    # def set_dir_path(self, path):
+    #     return self.path
 
-    def get_is_directory(self):
-       return  self.get_is_directory
 
-    def set_is_directory(self, is_directory ):
-        self.is_directory = is_directory
