@@ -25,7 +25,7 @@ class Search():
         :return:
         """
 
-        LOGGER.info("=========start setting new value for search criteria=========")
+        LOGGER.info("search_files_and_directories : Enter")
         result = []
         for root, directories, files in os.walk(self.base_path):
             for dir in directories:
@@ -39,6 +39,7 @@ class Search():
                 print("ext: ", file.get_extension())
                 result.append(os.path.join(root,file.get_name()))
                 LOGGER.info('Doing something')
+        LOGGER.info("search_files_and_directories : Exit")
         return result
 
     def search_all_files(self):
