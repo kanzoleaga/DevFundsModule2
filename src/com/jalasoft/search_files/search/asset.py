@@ -27,6 +27,3 @@ class Asset(object):
     def get_name(self):
         return self.name
 
-
-    # def set_is_directory(self, asset):
-    #     self.is_directory = asset
