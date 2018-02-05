@@ -21,9 +21,6 @@ class Asset(object):
     def get_size(self):
         return self.size
 
-    def set_size(self):
-        return self.size
-
     def get_is_directory(self):
         return self.is_directory
 
