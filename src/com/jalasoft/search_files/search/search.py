@@ -99,36 +99,33 @@ class Search():
 
     def search_files_less_than_size_bytes(self, size):
         logger.info("search_files_less_than_size_bytes : Enter")
-        result = []
         for root, directories, files in os.walk(self.base_path):
             for file in files:
                 file = File(os.path.join(root, file), file)
                 if file.get_size() < size:
-                    result.append(file.get_path() + " -> " + str(file.get_size()))
+                    self.result.append(file.get_path() + " -> " + str(file.get_size()))
         logger.info("search_files_less_than_size_bytes : Exit")
-        return result
+        return self.result
 
     def search_files_greater_than_size_bytes(self, size):
         logger.info("search_files_greater_than_size_bytes : Enter")
-        result = []
         for root, directories, files in os.walk(self.base_path):
             for file in files:
                 file = File(os.path.join(root, file), file)
                 if file.get_size() > size:
-                    result.append(file.get_path() + " -> " + str(file.get_size()))
+                    self.result.append(file.get_path() + " -> " + str(file.get_size()))
         logger.info("search_files_greater_than_size_bytes : Exit")
-        return result
+        return self.result
 
     def search_directories_by_name(self, name):
         logger.info("search_directories_by_name : Enter")
-        result = []
         for root, directories, files in os.walk(self.base_path):
             for dir in directories:
                 directory = Directory(os.path.join(root, dir), dir)
                 if name.lower() in directory.get_name().lower():
-                    result.append(directory.get_path())
+                    self.result.append(directory.get_path())
         logger.info("search_directories_by_name : Exit")
-        return result
+        return self.result
 
     def search_directory_size(self):
         logger.info("directory_size : Enter")
