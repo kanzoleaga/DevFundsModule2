@@ -22,35 +22,17 @@ class Search():
         :return:
         """
 
-<<<<<<< HEAD
-        LOGGER.info("search_files_and_directories : Enter")
-        #result = []
-        for root, directories, files in os.walk(self.base_path):
-            for dir in directories:
-                directory = Directory(os.path.join(root, dir), dir)
-                self.result.append(os.path.join(self.base_path,directory.get_name()))
-                LOGGER.debug(self,'directories search', directory)
-
-            for file in files:
-                file = File(os.path.join(root, file), file)
-                self.result.append(os.path.join(root,file.get_name()))
-                LOGGER.info('Doing something')
-        LOGGER.info("search_files_and_directories : Exit")
-        return self.result
-=======
         logger.info("search_files_and_directories : Enter")
-        result = []
         for root, directories, files in os.walk(self.base_path):
             for dir in directories:
                 directory = Directory(os.path.join(root, dir), dir)
-                result.append(directory.get_path())
+                self.result.append(directory.get_path())
 
             for file in files:
                 file = File(os.path.join(root, file), file)
-                result.append(file.get_path())
+                self.result.append(file.get_path())
         logger.info("search_files_and_directories : Exit")
-        return result
->>>>>>> develop
+        return self.result
 
     def search_all_files(self):
         logger.info("search_all_files : Enter")
@@ -82,25 +64,14 @@ class Search():
         :return:
         """
 
-<<<<<<< HEAD
-        for root, directories, files in os.walk(self.base_path):
-            for file in files:
-                file = File(os.path.join(root, file), file)
-                if file.get_name().endswith(file.get_extension()):
-                    self.result.append(os.path.join(root, file.get_name()))
-
-        return self.result
-=======
         logger.info("search_files_by_extension : Enter")
-        result = []
         for root, directories, files in os.walk(self.base_path):
             for file in files:
                 file = File(os.path.join(root, file), file)
                 if file.get_name().lower().endswith(("." + extension).lower()):
-                    result.append(file.get_path())
+                    self.result.append(file.get_path())
         logger.info("search_files_by_extension : Exit")
-        return result
->>>>>>> develop
+        return self.result
 
     def search_files_by_name(self, name):
         """
@@ -108,24 +79,23 @@ class Search():
         :param name:
         :return:
         """
-<<<<<<< HEAD
-        name = name + ".*"
-        for root, dirnames, filenames in os.walk(self.base_path):
-            for file in fnmatch.filter(filenames, name):
-                file = File(os.path.join(root, file), file)
-                self.result.append(os.path.join(root, file.get_name()))
-        return self.result
-=======
+# <<<<<<< HEAD
+#         name = name + ".*"
+#         for root, dirnames, filenames in os.walk(self.base_path):
+#             for file in fnmatch.filter(filenames, name):
+#                 file = File(os.path.join(root, file), file)
+#                 self.result.append(os.path.join(root, file.get_name()))
+#         return self.result
+# =======
         logger.info("search_files_by_name : Enter")
-        result = []
         for root, directories, files in os.walk(self.base_path):
             for file in files:
                 file = File(os.path.join(root, file), file)
                 if name.lower() in file.get_name().lower():
-                    result.append(file.get_path())
+                    self.result.append(file.get_path())
         logger.info("search_files_by_name : Exit")
-        return result
->>>>>>> develop
+        return self.result
+#>>>>>>> develop
 
     def search_files_less_than_size_bytes(self, size):
         logger.info("search_files_less_than_size_bytes : Enter")
