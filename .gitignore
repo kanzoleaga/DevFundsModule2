@@ -117,3 +117,9 @@ venvDevFund2/pyvenv.cfg
 .idea/workspace.xml
 .idea/DevFundsModule2.iml
 
+.idea/DevFundsModle2.iml
+.idea/modules.xml
+.idea/vcs.xml
+*.xml
+.idea/workspace.xml
+log/search_files.log.2018-01-30_08

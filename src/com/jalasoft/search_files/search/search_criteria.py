@@ -2,7 +2,7 @@ class SearchCriteria(object):
     def __init__(self, path, name, extension, asset_type=None, size_range=None, size_unit=None, owner=None,
                  create_date_range=None):
 
-        """
+        """ **kwargs
         This is the constructor of the SearchCriteria class.
         Where size_range is a tuple (from_size, to_size)
         Where create_date_range is a tuple (from_date, to_date)

@@ -15,6 +15,7 @@ class Search():
         :param base_path: this parameter is main to search by any criteria
         """
         self.base_path = base_path
+        self.result = []
 
     def search_files_and_directories(self):
         """
@@ -36,23 +37,21 @@ class Search():
 
     def search_all_files(self):
         logger.info("search_all_files : Enter")
-        result = []
         for root, directories, files in os.walk(self.base_path):
             for file in files:
                 file = File(os.path.join(root, file), file)
-                result.append(file.get_path())
+                self.result.append(file.get_path())
         logger.info("search_all_files : Exit")
-        return result
+        return self.result
 
     def search_all_directories(self):
         logger.info("search_all_directories : Enter")
-        result = []
         for root, directories, files in os.walk(self.base_path):
             for dir in directories:
                 directory = Directory(os.path.join(root, dir), dir)
-                result.append(directory.get_path())
+                self.result.append(directory.get_path())
         logger.info("search_all_directories : Exit")
-        return result
+        return self.result
 
     def search_by_filter(self):
         pass
