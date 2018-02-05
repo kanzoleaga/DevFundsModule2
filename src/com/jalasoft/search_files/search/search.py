@@ -24,19 +24,19 @@ class Search():
         """
 
         LOGGER.info("search_files_and_directories : Enter")
-        result = []
+        #result = []
         for root, directories, files in os.walk(self.base_path):
             for dir in directories:
                 directory = Directory(os.path.join(root, dir), dir)
-                result.append(os.path.join(self.base_path,directory.get_name()))
+                self.result.append(os.path.join(self.base_path,directory.get_name()))
                 LOGGER.debug(self,'directories search', directory)
 
             for file in files:
                 file = File(os.path.join(root, file), file)
-                result.append(os.path.join(root,file.get_name()))
+                self.result.append(os.path.join(root,file.get_name()))
                 LOGGER.info('Doing something')
         LOGGER.info("search_files_and_directories : Exit")
-        return result
+        return self.result
 
     def search_all_files(self):
         pass
@@ -50,14 +50,13 @@ class Search():
         :return:
         """
 
-        result = []
         for root, directories, files in os.walk(self.base_path):
             for file in files:
                 file = File(os.path.join(root, file), file)
                 if file.get_name().endswith(file.get_extension()):
-                    result.append(os.path.join(root, file.get_name()))
+                    self.result.append(os.path.join(root, file.get_name()))
 
-        return result
+        return self.result
 
     def searh_by_name(self, name):
         """
@@ -66,12 +65,11 @@ class Search():
         :return:
         """
         name = name + ".*"
-        result = []
         for root, dirnames, filenames in os.walk(self.base_path):
             for file in fnmatch.filter(filenames, name):
                 file = File(os.path.join(root, file), file)
-                result.append(os.path.join(root, file.get_name()))
-        return result
+                self.result.append(os.path.join(root, file.get_name()))
+        return self.result
 
 
 
