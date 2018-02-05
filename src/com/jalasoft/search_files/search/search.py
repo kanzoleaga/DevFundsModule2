@@ -6,7 +6,7 @@ from  src.com.jalasoft.search_files.search.directory import Directory
 from  src.com.jalasoft.search_files.search.file import  File
 import os
 import fnmatch
-from src.com.jalasoft.search_files.utils.logging_config import LOGGER as LOGGER
+from src.com.jalasoft.search_files.utils.logging_config import logger
 
 class Search():
     def __init__(self, base_path):
@@ -22,23 +22,25 @@ class Search():
         :return:
         """
 
-        LOGGER.info("search_files_and_directories : Enter")
+        logger.info("search_files_and_directories : Enter")
+
         result = []
+        logger.info("Search_files_and_directories : Load files and/or directories")
         for root, directories, files in os.walk(self.base_path):
             for dir in directories:
                 directory = Directory(os.path.join(root, dir), dir)
                 result.append(os.path.join(self.base_path,directory.get_name()))
-                LOGGER.debug(self,'directories search', directory)
 
             for file in files:
                 file = File(os.path.join(root, file), file)
                 result.append(os.path.join(root,file.get_name()))
-                LOGGER.info('Doing something')
-        LOGGER.info("search_files_and_directories : Exit")
+
+        logger.info("search_files_and_directories : Exit")
         return result
 
     def search_all_files(self):
         pass
+
     def search_by_filter(self):
         pass
 
