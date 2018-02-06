@@ -97,9 +97,9 @@ class Menu():
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        size = input("Enter the size in KB >>  ")
+        size = int(input("Enter the size in KB >>  "))
         while not is_number(size):
-            size = input("Invalid size. Please enter a number >>  ")
+            size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all assets less than selected size. Starting the searching process in ", path)
         search = Search(path)
         print(search.search_files_and_directories_less_than_size_bytes(size))
@@ -110,9 +110,9 @@ class Menu():
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        size = input("Enter the size in KB >>  ")
+        size = int(input("Enter the size in KB >>  "))
         while not is_number(size):
-            size = input("Invalid size. Please enter a number >>  ")
+            size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all assets greater than selected size. Starting the searching process in ", path)
         search = Search(path)
         print(search.search_files_and_directories_greater_than_size_bytes(size))
@@ -184,7 +184,7 @@ class Menu():
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        size = input("Enter the size in KB >>  ")
+        size = int(input("Enter the size in KB >>  "))
         while not is_number(size):
             size = input("Invalid size. Please enter a number >>  ")
         print("Find all files less than selected size. Starting the searching process in ", path)
@@ -196,10 +196,10 @@ class Menu():
     def find_files_by_size_greater_than(self):
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
-            path = input("Invalid path. Please enter a valid path >>  ")
+            path = int(input("Invalid path. Please enter a valid path >>  "))
         size = input("Enter the size in KB >>  ")
         while not is_number(size):
-            size = input("Invalid size. Please enter a number >>  ")
+            size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all files greater than selected size. Starting the searching process in ", path)
         search = Search(path)
         print(search.search_files_greater_than_size_bytes(size))
@@ -246,10 +246,10 @@ class Menu():
     def find_folders_by_size(self):
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
-            path = input("Invalid path. Please enter a valid path >>  ")
-        size = input("Enter the folder size >>  ")
+            path = int(input("Invalid path. Please enter a valid path >>  "))
+        size = int(input("Enter the folder size >>  "))
         while not is_number(size):
-            size = input("Invalid size. Please enter a number >>  ")
+            size = int(input("Invalid size. Please enter a number >>  "))
         print("Find folders by size was selected. Starting the searching process ...")
         Menu.menu3_search_all_directories(self)
 
