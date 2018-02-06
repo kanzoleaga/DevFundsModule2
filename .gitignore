@@ -123,3 +123,4 @@ venvDevFund2/pyvenv.cfg
 *.xml
 .idea/workspace.xml
 log/search_files.log.2018-01-30_08
+.idea/workspace.xml
