@@ -1,5 +1,5 @@
 class SearchCriteria(object):
-    def __init__(self, path, name, extension, asset_type=None, size_range=None, size_unit=None, owner=None,
+    def __init__(self, path, name, extension=None, asset_type=None, size_range=None, size_unit=None, owner=None,
                  create_date_range=None):
 
         """ **kwargs
