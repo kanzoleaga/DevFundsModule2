@@ -77,7 +77,8 @@ class Menu():
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid full path >>  ")
         print("Find all assets from selected path. Starting the searching process in ", path)
-        search = Search(path)
+        search = Search()
+        search.set_basic_search_criteria(path)
         print(search.search_files_and_directories())
         # Return to menu option 1
         Menu.menu1_search_all_assets(self)
@@ -86,10 +87,13 @@ class Menu():
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        name = input("Enter the name of the asset >>  ")
+        name = str(input("Enter the name of the asset >>  "))
+        while not len(name) > 0:
+            name = str(input("Enter the name of the asset >>  "))
         print("Find all assets by name from selected path. Starting the searching process in ", path)
-        search = Search(path)
-        print(search.search_files_and_directories_by_name(name))
+        search = Search()
+        search.set_basic_search_criteria(path, name)
+        print(search.search_files_and_directories_by_name())
         # Return to menu option 1
         Menu.menu1_search_all_assets(self)
 
@@ -101,11 +105,13 @@ class Menu():
         while not is_number(size):
             size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all assets less than selected size. Starting the searching process in ", path)
-        search = Search(path)
-        print(search.search_files_and_directories_less_than_size_bytes(size))
+        search = Search()
+        search.set_advanced_search_criteria(path, name=None, extension=None, size=size)
+        search.criteria.get_criteria_value('size')
+        print(search.search_files_and_directories_less_than_size_bytes())
         # Return to menu option 1
         Menu.menu1_search_all_assets(self)
-
+## Missing from here
     def find_assets_by_size_greater_than(self):
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
@@ -114,7 +120,7 @@ class Menu():
         while not is_number(size):
             size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all assets greater than selected size. Starting the searching process in ", path)
-        search = Search(path)
+        search = Search()
         print(search.search_files_and_directories_greater_than_size_bytes(size))
         # Return to menu option 1
         Menu.menu1_search_all_assets(self)
@@ -153,7 +159,7 @@ class Menu():
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
         print("Find all files including from sub directories. Starting the searching process in ", path)
-        search = Search(path)
+        search = Search()
         print(search.search_all_files())
         # Return to menu option 2
         Menu.menu2_search_all_files(self)
@@ -164,18 +170,21 @@ class Menu():
             path = input("Invalid path. Please enter a valid path >>  ")
         extension = input("Enter the extension >>  ")
         print("Find all files by extension. Starting the searching process in ", path)
-        search = Search(path)
+        search = Search()
         print(search.search_files_by_extension(extension))
         # Return to menu option 2
         Menu.menu2_search_all_files(self)
 
     def find_files_by_name(self):
+        search = Search()
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        name = input("Enter file name >>  ")
+        name = str(input("Enter file name >>  "))
+        while not len(name) > 0:
+            name = str(input("Enter file name >>  "))
         print("Find all files by name from selected path. Starting the searching process in ", path)
-        search = Search(path)
+        search.set_basic_search_criteria(path, name)
         print(search.search_files_by_name(name))
         # Return to menu option 2
         Menu.menu2_search_all_files(self)
@@ -188,7 +197,8 @@ class Menu():
         while not is_number(size):
             size = input("Invalid size. Please enter a number >>  ")
         print("Find all files less than selected size. Starting the searching process in ", path)
-        search = Search(path)
+        search = Search()
+
         print(search.search_files_less_than_size_bytes(size))
         # Return to menu option 2
         Menu.menu2_search_all_files(self)
@@ -201,7 +211,7 @@ class Menu():
         while not is_number(size):
             size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all files greater than selected size. Starting the searching process in ", path)
-        search = Search(path)
+        search = Search()
         print(search.search_files_greater_than_size_bytes(size))
         # Return to menu option 2
         Menu.menu2_search_all_files(self)

@@ -1,6 +1,5 @@
 class SearchCriteria(object):
-    def __init__(self, path, name, extension, asset_type=None, size_range=None, size_unit=None, owner=None,
-                 create_date_range=None):
+    def __init__(self, path, name=None, extension=None, size=None, owner=None, create_date_range=None):
 
         """
         This is the constructor of the SearchCriteria class.
@@ -8,24 +7,19 @@ class SearchCriteria(object):
         Where create_date_range is a tuple (from_date, to_date)
         Where asset_type is 'file' or 'dir'
         Where size_unit is either 'B', 'KB', 'MB', 'GB'
-        :param path:
-        :param name:
-        :param extension:
-        :param asset_type:
-        :param size_range:
-        :param size_unit:
-        :param owner:
-        :param create_date_range:
+        :param str path:
+        :param str name:
+        :param str extension:
+        :param int size:
+        :param str owner:
         """
         self.criteria = {
                         'path': path,
                         'extension': extension,
                         'name': name,
-                        'size_range': size_range,
-                        'size_unit': size_unit,
+                        'size': size,
                         'owner': owner,
-                        'create_date_range': create_date_range,
-                        'asset_type': asset_type
+                        'create_date_range': create_date_range
         }
 
     def get_criteria_value(self, key):
