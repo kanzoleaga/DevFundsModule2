@@ -6,6 +6,7 @@ from  src.com.jalasoft.search_files.search.directory import Directory
 from  src.com.jalasoft.search_files.search.file import  File
 import os
 import fnmatch
+from src.com.jalasoft.search_files.search.search_criteria import *
 from src.com.jalasoft.search_files.utils.logging_config import logger
 
 class Search():
@@ -14,8 +15,12 @@ class Search():
 
         :param base_path: this parameter is main to search by any criteria
         """
-        self.base_path = base_path
+        self.criteria = {}
         self.result = []
+
+    def set_basic_search_criteria(self, path, name, extension=None):
+        self.criteria = SearchCriteria(path, name, extension)
+
 
     def search_files_and_directories(self):
         """
@@ -24,7 +29,7 @@ class Search():
         """
 
         logger.info("search_files_and_directories : Enter")
-        for root, directories, files in os.walk(self.base_path):
+        for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             for dir in directories:
                 directory = Directory(os.path.join(root, dir), dir)
                 self.result.append(directory.get_path())
@@ -72,7 +77,7 @@ class Search():
         logger.info("search_files_by_extension : Exit")
         return self.result
 
-    def search_files_by_name(self, name):
+    def search_files_by_name(self):
         """
 
         :param name:
@@ -87,10 +92,10 @@ class Search():
 #         return self.result
 # =======
         logger.info("search_files_by_name : Enter")
-        for root, directories, files in os.walk(self.base_path):
+        for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             for file in files:
                 file = File(os.path.join(root, file), file)
-                if name.lower() in file.get_name().lower():
+                if self.criteria.get_criteria_value('name').lower() in file.get_name().lower():
                     self.result.append(file.get_path())
         logger.info("search_files_by_name : Exit")
         return self.result

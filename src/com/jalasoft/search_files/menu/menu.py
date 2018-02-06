@@ -22,9 +22,8 @@ class Menu():
     def main_menu(self):
         os.system("cls")
         print("Please choose the option you want to start:")
-        print("1. Search all assets from a path")
-        print("2. Search all files in a path")
-        print("3. Search all directories in a path")
+        print("1. Basic search")
+        print("2. Advanced search")
         print("0. Quit")
         choice = input(" >>  ")
         Menu.exec_menu(self, choice)
@@ -33,7 +32,7 @@ class Menu():
     def exec_menu(self, choice):
         os.system('cls')
         menu_option = choice.lower()
-        if menu_option != '1' and menu_option != '2' and menu_option != '3' and menu_option != '0':
+        if menu_option != '1' and menu_option != '2' and menu_option != '0':
             os.system("cls")
             print("Invalid selection, please try again.\n")
             Menu.menu_actions['main_menu'](self)
@@ -45,9 +44,9 @@ class Menu():
                 Menu.menu_actions['main_menu'](self)
 
     # Execute menu1
-    def exec_menu1_search_assets(self, choice):
+    def exec_menu1_basic_search(self, choice):
         menu_option = choice.lower()
-        if menu_option != '1' and menu_option != '2' and menu_option != '3' and menu_option != '9' and menu_option != '0':
+        if menu_option != '1' and menu_option != '2' and menu_option != '9' and menu_option != '0':
             os.system("cls")
             print("Invalid selection, please try again.\n")
             Menu.menu1_actions['main_menu'](self)
@@ -88,16 +87,15 @@ class Menu():
         return
 
     # Menu 1
-    def menu1_search_assets(self):
+    def menu1_basic_search(self):
         print("\n")
-        print("Searching for assets in a path \n")
-        print("1. Find all assets")
-        print("2. Find assets by name")
-        print("3. Find assets by size")
+        print("Basic search \n")
+        print("1. Find file")
+        print("2. Find extension")
         print("9. Back")
         print("0. Quit")
         choice = input(" >>  ")
-        Menu.exec_menu1_search_assets(self, choice)
+        Menu.exec_menu1_basic_search(self, choice)
         return
 
     # Menu 2
@@ -126,15 +124,21 @@ class Menu():
         return
 
     # Menu1 Actions:
-    def find_all_assets(self):
+    def find_file(self):
         path = input("Enter full path >>  ")
+        search = Search(path)
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid full path >>  ")
-        print("Find all assets from selected path. Starting the searching process in ", path)
-        search = Search(path)
-        print(search.search_files_and_directories())
-
-        Menu.menu1_search_assets(self)
+        name = input("Enter file name (If empty all will be displayed) >>  ")
+        if str(name) == '':
+            print("Finding all assets from selected path: ", path)
+            search.set_basic_search_criteria(path, name)
+            print(search.search_files_and_directories())
+        else:
+            print("Finding files by name: ", name)
+            search.set_basic_search_criteria(path, name)
+            print(search.search_files_by_name())
+        Menu.menu1_basic_search(self)
 
     def find_assets_by_name(self):
         path = input("Enter the path >>  ")
@@ -218,15 +222,15 @@ class Menu():
     # Menu definition
     menu_actions = {
         'main_menu': main_menu,
-        '1': menu1_search_assets,
+        '1': menu1_basic_search,
         '2': menu2,
         '3': menu3,
         '0': exit,
     }
 
     menu1_actions = {
-        'main_menu': menu1_search_assets,
-        '1': find_all_assets,
+        'main_menu': menu1_basic_search,
+        '1': find_file,
         '2': find_assets_by_name,
         '3': find_assets_by_size,
         '9': back,
