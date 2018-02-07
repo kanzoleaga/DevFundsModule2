@@ -106,7 +106,7 @@ class Menu():
             size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all assets less than selected size. Starting the searching process in ", path)
         search = Search()
-        search.set_advanced_search_criteria(path, name=None, extension=None, size=size)
+        search.set_advanced_search_criteria(path, name=None, extension=None, size=size * 1024)
         search.criteria.get_criteria_value('size')
         print(search.search_files_and_directories_less_than_size_bytes())
         # Return to menu option 1
@@ -121,7 +121,7 @@ class Menu():
             size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all assets greater than selected size. Starting the searching process in ", path)
         search = Search()
-        search.set_advanced_search_criteria(path, size=size)
+        search.set_advanced_search_criteria(path, size=size * 1204)
         print(search.search_files_and_directories_greater_than_size_bytes())
         # Return to menu option 1
         Menu.menu1_search_all_assets(self)
@@ -202,7 +202,7 @@ class Menu():
             size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all files less than selected size. Starting the searching process in ", path)
         search = Search()
-        search.set_advanced_search_criteria(path, size=size)
+        search.set_advanced_search_criteria(path, size = size * 1024)
         print(search.search_files_less_than_size_bytes())
         # Return to menu option 2
         Menu.menu2_search_all_files(self)
@@ -216,8 +216,9 @@ class Menu():
             size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all files greater than selected size. Starting the searching process in ", path)
         search = Search()
-        search.set_advanced_search_criteria(path, size=size)
+        search.set_advanced_search_criteria(path, size=size * 1024)
         print(search.search_files_greater_than_size_bytes())
+        #print(search.search_files_less_than_size_bytes(size * 1024))
         # Return to menu option 2
         Menu.menu2_search_all_files(self)
 

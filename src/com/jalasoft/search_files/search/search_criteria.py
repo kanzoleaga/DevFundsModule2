@@ -39,4 +39,4 @@ criteria = {'path': 'c:\test',
             'name': 'test',
             'extension': '.txt'}
 search_criteria = SearchCriteria('c:\test','test', '.txt')
-print (search_criteria.get_criteria_value('extension'))
+# print (search_criteria.get_criteria_value('extension'))
