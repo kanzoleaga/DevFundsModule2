@@ -34,9 +34,3 @@ class SearchCriteria(object):
         else:
             raise ValueError('Invalid key. Key value' + key + 'is not a valid criteria')
 
-
-criteria = {'path': 'c:\test',
-            'name': 'test',
-            'extension': '.txt'}
-search_criteria = SearchCriteria('c:\test','test', '.txt')
-# print (search_criteria.get_criteria_value('extension'))
