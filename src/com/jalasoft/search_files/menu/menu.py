@@ -11,7 +11,7 @@ class Menu():
         # Define dictionaries for menus - constants
         self.main_menu_actions = {}
         self.menu_option1_actions = {}
-        self.menu_option2_actions = {}
+        self.menu_opti1on2_actions = {}
         self.menu_option3_actions = {}
 
     # =======================
@@ -97,12 +97,12 @@ class Menu():
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        size = input("Enter the size in KB >>  ")
+        size = int(input("Enter the size in KB >>  "))
         while not is_number(size):
-            size = input("Invalid size. Please enter a number >>  ")
+            size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all assets less than selected size. Starting the searching process in ", path)
         search = Search(path)
-        print(search.search_files_and_directories_less_than_size_bytes(size))
+        print(search.search_files_and_directories_less_than_size_bytes(size * 1024))
         # Return to menu option 1
         Menu.menu1_search_all_assets(self)
 
@@ -110,12 +110,12 @@ class Menu():
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        size = input("Enter the size in KB >>  ")
+        size = int(input("Enter the size in KB >>  "))
         while not is_number(size):
-            size = input("Invalid size. Please enter a number >>  ")
+            size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all assets greater than selected size. Starting the searching process in ", path)
         search = Search(path)
-        print(search.search_files_and_directories_greater_than_size_bytes(size))
+        print(search.search_files_and_directories_greater_than_size_bytes(size * 1024))
         # Return to menu option 1
         Menu.menu1_search_all_assets(self)
 
@@ -184,12 +184,12 @@ class Menu():
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        size = input("Enter the size in KB >>  ")
+        size = int(input("Enter the size in KB >>  "))
         while not is_number(size):
-            size = input("Invalid size. Please enter a number >>  ")
+            size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all files less than selected size. Starting the searching process in ", path)
         search = Search(path)
-        print(search.search_files_less_than_size_bytes(size))
+        print(search.search_files_less_than_size_bytes(size * 1024))
         # Return to menu option 2
         Menu.menu2_search_all_files(self)
 
@@ -197,24 +197,24 @@ class Menu():
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        size = input("Enter the size in KB >>  ")
+        size = int(input("Enter the size in KB >>  "))
         while not is_number(size):
-            size = input("Invalid size. Please enter a number >>  ")
+            size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all files greater than selected size. Starting the searching process in ", path)
         search = Search(path)
-        print(search.search_files_greater_than_size_bytes(size))
+        print(search.search_files_greater_than_size_bytes(size * 1024))
         # Return to menu option 2
         Menu.menu2_search_all_files(self)
 
     # Main menu - Option 3
     def menu3_search_all_directories(self):
         print("\n")
-        print("Sarching for folders in a path \n")
-        print("1. Find all folders")
-        print("2. Find folders by name")
-        print("3. Find count files in folders")
-        print("4. Find folders by size less than - KB")
-        print("5. Find folders by size greater than - KB")
+        print("Searching for directories in a path \n")
+        print("1. Find all directories")
+        print("2. Find directories by name")
+        print("3. Find count files in directories")
+        print("4. Find directories by size less than - KB")
+        print("5. Find directories by size greater than - KB")
         print("9. Back")
         print("0. Quit")
         choice = input(" >>  ")
@@ -235,22 +235,59 @@ class Menu():
                 Menu.menu_option3_actions['main_menu'](self)
 
     # Menu option 3 Actions:
-    def find_folders_by_name(self):
+    def find_all_directories(self):
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        name = input("Enter the folder name >>  ")
-        print("Find folders by name was selected. Starting the searching process ...")
+        print("Find all directories in selected path. Starting the searching process in ", path)
+        search = Search(path)
+        print(search.search_all_directories())
+        # Return to menu option 3
         Menu.menu3_search_all_directories(self)
 
-    def find_folders_by_size(self):
+    def find_directories_by_name(self):
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        size = input("Enter the folder size >>  ")
+        name = input("Enter the directory name >>  ")
+        print("Find directories by name in selected path. Starting the searching process ", path)
+        search = Search(path)
+        print(search.search_directories_by_name(name))
+        # Return to menu option 3
+        Menu.menu3_search_all_directories(self)
+
+    def find_count_files_on_directories(self):
+        path = input("Enter the path >>  ")
+        while not os.path.isdir(path):
+            path = input("Invalid path. Please enter a valid path >>  ")
+        print("Find count files by directory in selected path. Starting the searching process ", path)
+        search = Search(path)
+        print(search.count_files_by_directory_nested())
+        # Return to menu option 3
+        Menu.menu3_search_all_directories(self)
+
+    def find_directories_by_size_less_than(self):
+        path = input("Enter the path >>  ")
+        while not os.path.isdir(path):
+            path = input("Invalid path. Please enter a valid path >>  ")
+        size = int(input("Enter the folder size >>  "))
         while not is_number(size):
-            size = input("Invalid size. Please enter a number >>  ")
-        print("Find folders by size was selected. Starting the searching process ...")
+            size = int(input("Invalid size. Please enter a number >>  "))
+        print("Find all directories less than selected size. Starting the searching process in ", path)
+        search = Search(path)
+        print(search.search_directories_less_than_size_bytes(size * 1024))
+        Menu.menu3_search_all_directories(self)
+
+    def find_directories_by_size_greater_than(self):
+        path = input("Enter the path >>  ")
+        while not os.path.isdir(path):
+            path = input("Invalid path. Please enter a valid path >>  ")
+        size = int(input("Enter the folder size >>  "))
+        while not is_number(size):
+            size = int(input("Invalid size. Please enter a number >>  "))
+        print("Find all directories greater than selected size. Starting the searching process in ", path)
+        search = Search(path)
+        print(search.search_directories_greater_than_size_bytes(size * 1024))
         Menu.menu3_search_all_directories(self)
 
     # Back to main menu
@@ -299,8 +336,11 @@ class Menu():
 
     menu_option3_actions = {
         'main_menu': menu3_search_all_directories,
-        '1': find_folders_by_name,
-        '2': find_folders_by_size,
+        '1': find_all_directories,
+        '2': find_directories_by_name,
+        '3': find_count_files_on_directories,
+        '4': find_directories_by_size_less_than,
+        '5': find_directories_by_size_greater_than,
         '9': back,
         '0': exit,
     }

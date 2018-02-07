@@ -120,12 +120,14 @@ class Search():
                 directory = Directory(os.path.join(root, dir), dir)
                 directory_size = Search.search_directory_size_from_path(self, directory.get_path())
                 if directory_size < size:
-                    result.append(directory.get_path() + " -> " + str(directory_size))
+                    size_kb = "{0:.2f}".format(directory_size / 1024)
+                    result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory_size) + " bytes )")
 
             for file in files:
                 file = File(os.path.join(root, file), file)
                 if file.get_size() < size:
-                    result.append(file.get_path() + " -> " + str(file.get_size()))
+                    size_kb = "{0:.2f}".format(file.get_size() / 1024)
+                    result.append(file.get_path() + " -> " + str(size_kb) + " KB (" + str(file.get_size()) + " bytes )")
         logger.info("search_files_and_directories_less_than_size_bytes : Exit")
         return result
 
@@ -137,12 +139,14 @@ class Search():
                 directory = Directory(os.path.join(root, dir), dir)
                 directory_size = Search.search_directory_size_from_path(self, directory.get_path())
                 if directory_size > size:
-                    result.append(directory.get_path() + " -> " + str(directory_size))
+                    size_kb = "{0:.2f}".format(directory_size / 1024)
+                    result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory_size) + " bytes )")
 
             for file in files:
                 file = File(os.path.join(root, file), file)
                 if file.get_size() > size:
-                    result.append(file.get_path() + " -> " + str(file.get_size()))
+                    size_kb = "{0:.2f}".format(file.get_size() / 1024)
+                    result.append(file.get_path() + " -> " + str(size_kb) + " KB (" + str(file.get_size()) + " bytes )")
         logger.info("search_files_and_directories_greater_than_size_bytes : Exit")
         return result
 
@@ -153,7 +157,8 @@ class Search():
             for file in files:
                 file = File(os.path.join(root, file), file)
                 if file.get_size() < size:
-                    result.append(file.get_path() + " -> " + str(file.get_size()))
+                    size_kb = "{0:.2f}".format(file.get_size() / 1024)
+                    result.append(file.get_path() + " -> " + str(size_kb)+ " KB (" + str(file.get_size()) + " bytes )")
         logger.info("search_files_less_than_size_bytes : Exit")
         return result
 
@@ -164,7 +169,8 @@ class Search():
             for file in files:
                 file = File(os.path.join(root, file), file)
                 if file.get_size() > size:
-                    result.append(file.get_path() + " -> " + str(file.get_size()))
+                    size_kb = "{0:.2f}".format(file.get_size() / 1024)
+                    result.append(file.get_path() + " -> " + str(size_kb)+ " KB (" + str(file.get_size()) + " bytes )")
         logger.info("search_files_greater_than_size_bytes : Exit")
         return result
 
@@ -177,6 +183,32 @@ class Search():
                 if name.lower() in directory.get_name().lower():
                     result.append(directory.get_path())
         logger.info("search_directories_by_name : Exit")
+        return result
+
+    def search_directories_less_than_size_bytes(self, size):
+        logger.info("search_directories_less_than_size_bytes : Enter")
+        result = []
+        for root, directories, files in os.walk(self.base_path):
+            for dir in directories:
+                directory = Directory(os.path.join(root, dir), dir)
+                directory_size = Search.search_directory_size_from_path(self, directory.get_path())
+                if directory_size < size:
+                    size_kb = "{0:.2f}".format(directory_size / 1024)
+                    result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory_size) + " bytes )")
+        logger.info("search_directories_less_than_size_bytes : Exit")
+        return result
+
+    def search_directories_greater_than_size_bytes(self, size):
+        logger.info("search_directories_greater_than_size_bytes : Enter")
+        result = []
+        for root, directories, files in os.walk(self.base_path):
+            for dir in directories:
+                directory = Directory(os.path.join(root, dir), dir)
+                directory_size = Search.search_directory_size_from_path(self, directory.get_path())
+                if directory_size > size:
+                    size_kb = "{0:.2f}".format(directory_size / 1024)
+                    result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory_size) + " bytes )")
+        logger.info("search_directories_greater_than_size_bytes : Exit")
         return result
 
     def search_directory_size(self):
@@ -199,10 +231,20 @@ class Search():
         logger.info("directory_size : Exit")
         return size
 
-    def count_files_by_directory(self):
+    def count_files_by_directory_nested(self):
+        logger.info("count_files_by_directory_nested : Enter")
+        result = []
+        for root, directories, files in os.walk(self.base_path):
+            for dir in directories:
+                directory = Directory(os.path.join(root, dir), dir)
+                result.append(directory.get_path() + " -> " + str(Search.count_files_by_directory(self, directory.get_path())) + " files")
+        logger.info("count_files_by_directory_nested : Exit")
+        return result
+
+    def count_files_by_directory(self, directory):
         logger.info("count_files_by_directory : Enter")
         counter = 0
-        for filenames in os.walk(self.base_path):
+        for filenames in os.walk(directory):
             for f in filenames[2]:
                 counter += 1
         logger.info("count_files_by_directory : Exit")
@@ -219,8 +261,8 @@ if __name__ == "__main__":
     #print(search.search_all_directories())
     #print(search.search_files_by_extension("txt"))
     #print(search.search_files_by_name("kate"))
-    #print(search.search_files_less_than_size_bytes(20000))
-    #print(search.search_files_greater_than_size_bytes(20000))
+    print(search.search_files_less_than_size_bytes(20000))
+    print(search.search_files_greater_than_size_bytes(20000))
     #print(search.search_directories_by_name("test2"))
-    #print("Directory size in bytes is: " + str(search.search_directory_size()))
-    #print("Directory has: " + str(search.count_files_by_directory()) + "  files")
+    print("Directory size in bytes is: " + str(search.search_directory_size()))
+    print("Directory has: " + str(search.count_files_by_directory("C:\\test")) + "  files")
