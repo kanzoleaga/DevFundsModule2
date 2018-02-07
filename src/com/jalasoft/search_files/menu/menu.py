@@ -210,8 +210,8 @@ class Menu():
     def find_files_by_size_greater_than(self):
         path = input("Enter the path >>  ")
         while not os.path.isdir(path):
-            path = int(input("Invalid path. Please enter a valid path >>  "))
-        size = input("Enter the size in KB >>  ")
+            path = input("Invalid path. Please enter a valid path >>  ")
+        size = int(input("Enter the size in KB >>  "))
         while not is_number(size):
             size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all files greater than selected size. Starting the searching process in ", path)
