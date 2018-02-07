@@ -199,11 +199,11 @@ class Menu():
             path = input("Invalid path. Please enter a valid path >>  ")
         size = int(input("Enter the size in KB >>  "))
         while not is_number(size):
-            size = input("Invalid size. Please enter a number >>  ")
+            size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all files less than selected size. Starting the searching process in ", path)
         search = Search()
-
-        print(search.search_files_less_than_size_bytes(size))
+        search.set_advanced_search_criteria(path, size=size)
+        print(search.search_files_less_than_size_bytes())
         # Return to menu option 2
         Menu.menu2_search_all_files(self)
 
@@ -216,7 +216,8 @@ class Menu():
             size = int(input("Invalid size. Please enter a number >>  "))
         print("Find all files greater than selected size. Starting the searching process in ", path)
         search = Search()
-        print(search.search_files_greater_than_size_bytes(size))
+        search.set_advanced_search_criteria(path, size=size)
+        print(search.search_files_greater_than_size_bytes())
         # Return to menu option 2
         Menu.menu2_search_all_files(self)
 
@@ -254,6 +255,8 @@ class Menu():
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
         name = input("Enter the folder name >>  ")
+        while not len(str(name)) > 0:
+            name = input("Enter a non empty folder name >>  ")
         print("Find folders by name was selected. Starting the searching process ...")
         Menu.menu3_search_all_directories(self)
 

@@ -22,7 +22,8 @@ class Search():
         self.criteria = SearchCriteria(path, name, extension)
 
     def set_advanced_search_criteria(self, path, name=None, extension=None, size=None):
-        self.criteria = SearchCriteria(path, name=name, extension=extension, size=size)
+        self.criteria = SearchCriteria(path, name, extension, size)
+
 
 
     def search_files_and_directories(self):
@@ -147,22 +148,22 @@ class Search():
         logger.info("search_files_and_directories_greater_than_size_bytes : Exit")
         return self.result
 
-    def search_files_less_than_size_bytes(self, size):
+    def search_files_less_than_size_bytes(self):
         logger.info("search_files_less_than_size_bytes : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             for file in files:
                 file = File(os.path.join(root, file), file)
-                if file.get_size() < size:
+                if file.get_size() < self.criteria.get_criteria_value('size'):
                     self.result.append(file.get_path() + " -> " + str(file.get_size()))
         logger.info("search_files_less_than_size_bytes : Exit")
         return self.result
 
-    def search_files_greater_than_size_bytes(self, size):
+    def search_files_greater_than_size_bytes(self):
         logger.info("search_files_greater_than_size_bytes : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             for file in files:
                 file = File(os.path.join(root, file), file)
-                if file.get_size() > size:
+                if file.get_size() > self.criteria.get_criteria_value('size'):
                     self.result.append(file.get_path() + " -> " + str(file.get_size()))
         logger.info("search_files_greater_than_size_bytes : Exit")
         return self.result
