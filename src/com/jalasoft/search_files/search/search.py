@@ -64,7 +64,7 @@ class Search():
     def search_by_filter(self):
         pass
 
-    def search_files_by_extension(self, extension):
+    def search_files_by_extension(self):
         """
 
         :param extension:
@@ -75,7 +75,7 @@ class Search():
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             for file in files:
                 file = File(os.path.join(root, file), file)
-                if file.get_name().lower().endswith(("." + extension).lower()):
+                if file.get_name().lower().endswith(("." + self.criteria.get_criteria_value('extension')).lower()):
                     self.result.append(file.get_path())
         logger.info("search_files_by_extension : Exit")
         return self.result
@@ -131,18 +131,18 @@ class Search():
         logger.info("search_files_and_directories_less_than_size_bytes : Exit")
         return self.result
 
-    def search_files_and_directories_greater_than_size_bytes(self, size):
+    def search_files_and_directories_greater_than_size_bytes(self):
         logger.info("search_files_and_directories_greater_than_size_bytes : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             for dir in directories:
                 directory = Directory(os.path.join(root, dir), dir)
                 directory_size = Search.search_directory_size_from_path(self, directory.get_path())
-                if directory_size > size:
+                if directory_size > self.criteria.get_criteria_value('size'):
                     self.result.append(directory.get_path() + " -> " + str(directory_size))
 
             for file in files:
                 file = File(os.path.join(root, file), file)
-                if file.get_size() > size:
+                if file.get_size() > self.criteria.get_criteria_value('size'):
                     self.result.append(file.get_path() + " -> " + str(file.get_size()))
         logger.info("search_files_and_directories_greater_than_size_bytes : Exit")
         return self.result
