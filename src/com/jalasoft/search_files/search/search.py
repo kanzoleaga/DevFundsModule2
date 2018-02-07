@@ -10,17 +10,18 @@ from src.com.jalasoft.search_files.search.search_criteria import *
 from src.com.jalasoft.search_files.utils.logging_config import logger
 
 class Search():
-    def __init__(self, base_path):
+    def __init__(self):
         """
-
         :param base_path: this parameter is main to search by any criteria
         """
-        self.criteria = {}
         self.result = []
+        self.criteria = {}
 
-    def set_basic_search_criteria(self, path, name, extension=None):
+    def set_basic_search_criteria(self, path, name=None, extension=None):
         self.criteria = SearchCriteria(path, name, extension)
 
+    def set_advanced_search_criteria(self, path, name=None, extension=None, size=None):
+        self.criteria = SearchCriteria(path, name, extension, size)
 
     def search_files_and_directories(self):
         """
@@ -83,14 +84,6 @@ class Search():
         :param name:
         :return:
         """
-# <<<<<<< HEAD
-#         name = name + ".*"
-#         for root, dirnames, filenames in os.walk(self.base_path):
-#             for file in fnmatch.filter(filenames, name):
-#                 file = File(os.path.join(root, file), file)
-#                 self.result.append(os.path.join(root, file.get_name()))
-#         return self.result
-# =======
         logger.info("search_files_by_name : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             for file in files:
@@ -99,7 +92,6 @@ class Search():
                     self.result.append(file.get_path())
         logger.info("search_files_by_name : Exit")
         return self.result
-#>>>>>>> develop
 
     def search_files_less_than_size_bytes(self, size):
         logger.info("search_files_less_than_size_bytes : Enter")
@@ -150,16 +142,16 @@ class Search():
         logger.info("count_files_by_directory : Exit")
         return counter
 
-if __name__ == "__main__":
-    search = Search("C:\\test")
-
-    print(search.search_files_and_directories())
-    print(search.search_all_files())
-    print(search.search_all_directories())
-    print(search.search_files_by_extension("txt"))
-    print(search.search_files_by_name("kate"))
-    print(search.search_files_less_than_size_bytes(20000))
-    print(search.search_files_greater_than_size_bytes(20000))
-    print(search.search_directories_by_name("test2"))
-    print("Directory size in bytes is: " + str(search.search_directory_size()))
-    print("Directory has: " + str(search.count_files_by_directory()) + "  files")
+# if __name__ == "__main__":
+#     search = Search("C:\\test")
+#
+#     print(search.search_files_and_directories())
+#     print(search.search_all_files())
+#     print(search.search_all_directories())
+#     print(search.search_files_by_extension("txt"))
+#     print(search.search_files_by_name("kate"))
+#     print(search.search_files_less_than_size_bytes(20000))
+#     print(search.search_files_greater_than_size_bytes(20000))
+#     print(search.search_directories_by_name("test2"))
+#     print("Directory size in bytes is: " + str(search.search_directory_size()))
+#     print("Directory has: " + str(search.count_files_by_directory()) + "  files")
