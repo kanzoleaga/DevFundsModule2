@@ -207,18 +207,17 @@ class Search():
         logger.info("count_files_by_directory : Exit")
         return counter
 
-if __name__ == "__main__":
-    search = Search("C:\\Python\\Python36-32")
-
+# if __name__ == "__main__":
+    # search = Search("C:\\Python\\Python36-32")
     #print(search.search_files_and_directories())
     #print(search.search_files_and_directories_by_name("kate"))
-    print(search.search_files_and_directories_less_than_size_bytes(20000))
-    print(search.search_files_and_directories_greater_than_size_bytes(20000))
+    # print(search.search_files_and_directories_less_than_size_bytes(20000))
+    # print(search.search_files_and_directories_greater_than_size_bytes(20000))
     #print(search.search_all_files())
     #print(search.search_all_directories())
     #print(search.search_files_by_extension("txt"))
     #print(search.search_files_by_name("kate"))
-    print(search.search_files_less_than_size_bytes(20000))
+    # print(search.search_files_less_than_size_bytes(20000))
     #print(search.search_files_greater_than_size_bytes(20000))
     #print(search.search_directories_by_name("test2"))
     #print("Directory size in bytes is: " + str(search.search_directory_size()))
