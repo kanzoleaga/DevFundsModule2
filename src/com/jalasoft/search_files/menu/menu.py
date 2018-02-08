@@ -12,7 +12,6 @@ class Menu():
         # Define dictionaries for menus - constants
         self.menu_actions = {}
 
-
     # =======================
     #     MENU FUNCTIONS
     # =======================
@@ -25,10 +24,9 @@ class Menu():
         print("2. Advanced search")
         print("0. Quit")
         choice = input(" >>  ")
-        Menu.exec_actions_on_main_menu(self, choice)
+        Menu.exec_menu(self, choice)
 
     # Execute main menu
-
     def exec_menu(self, choice):
         os.system("cls")
         ch = choice.lower()
@@ -53,7 +51,7 @@ class Menu():
             name = None
         extension = input("Enter the extension (empty for all) >>  ")
         if str(extension) == '':
-            extension = None1
+            extension = None
         asset_type = input("Enter the asset_type (dir/file/empty for all) >>  ")
         if str(asset_type) == '':
             asset_type = None
@@ -67,10 +65,9 @@ class Menu():
     def advanced_search(self):
         pass
 
-
     # Back to main menu
     def back(self):
-        Menu.main_menu_actions['main_menu'](self)
+        Menu.menu_actions['main_menu'](self)
 
 
     # Exit program
@@ -83,14 +80,12 @@ class Menu():
     # =======================
 
     # Menu definition
-    main_menu_actions = {
+    menu_actions = {
         'main_menu': main_menu,
         '1': basic_search,
         '2': advanced_search,
         '0': exit,
     }
-
-
 
 # =======================
 #      MAIN PROGRAM
