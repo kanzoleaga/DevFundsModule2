@@ -1,5 +1,5 @@
 class SearchCriteria(object):
-    def __init__(self, path, name, extension=None, asset_type=None, size_range=None, size_unit=None, owner=None,
+    def __init__(self, path, name, extension=None, asset_type=None, size=None, size_unit=None, owner=None,
                  create_date_range=None):
 
         """ **kwargs
@@ -19,14 +19,15 @@ class SearchCriteria(object):
         """
         self.criteria = {
                         'path': path,
-                        'extension': extension,
                         'name': name,
-                        'size_range': size_range,
+                        'extension': extension,
+                        'asset_type': asset_type,
+                        'size': size,
                         'size_unit': size_unit,
                         'owner': owner,
-                        'create_date_range': create_date_range,
-                        'asset_type': asset_type
+                        'create_date_range': create_date_range
         }
+
 
     def get_criteria_value(self, key):
         """
@@ -41,8 +42,3 @@ class SearchCriteria(object):
             raise ValueError('Invalid key. Key value' + key + 'is not a valid criteria')
 
 
-criteria = {'path': 'c:\test',
-            'name': 'test',
-            'extension': '.txt'}
-search_criteria = SearchCriteria('c:\test','test', '.txt')
-print (search_criteria.get_criteria_value('extension'))

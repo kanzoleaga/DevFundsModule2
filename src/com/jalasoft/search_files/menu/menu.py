@@ -52,8 +52,14 @@ class Menu():
         extension = input("Enter the extension (empty for none) >>  ")
         if str(extension) == '':
             extension = None
+        asset_type = input("Enter the asset_type (dir/file or empty for all) >>  ")
+        if str(asset_type) == '':
+            asset_type = None
         search = Search()
-        search.set_basic_search_criteria(path, name, extension)
+        search.set_basic_search_criteria(path, name, extension, asset_type)
+        search.search_by_criteria()
+        #print(search.criteria.get_criteria_value('asset_type'))
+
         Menu.main_menu(self)
 
     def advanced_search(self):

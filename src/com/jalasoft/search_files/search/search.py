@@ -17,11 +17,15 @@ class Search():
         self.result = []
         self.criteria = {}
 
-    def set_basic_search_criteria(self, path, name=None, extension=None):
-        self.criteria = SearchCriteria(path, name, extension)
+    def set_basic_search_criteria(self, path, name=None, extension=None, asset_type=None):
+        self.criteria = SearchCriteria(path, name, extension, asset_type)
 
-    def set_advanced_search_criteria(self, path, name=None, extension=None, size=None):
-        self.criteria = SearchCriteria(path, name, extension, size)
+    def set_advanced_search_criteria(self, path, name=None, extension=None, size=None, asset_type=None):
+        self.criteria = SearchCriteria(path, name, extension, size, asset_type)
+
+    def search_by_criteria(self):
+        if self.criteria.get_criteria_value('name') == None and self.criteria.get_criteria_value('asset_type') == None and self.criteria.get_criteria_value('extension') == None:
+            self.search_files_and_directories()
 
     def search_files_and_directories(self):
         """
