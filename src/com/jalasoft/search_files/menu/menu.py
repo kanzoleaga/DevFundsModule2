@@ -12,6 +12,7 @@ class Menu():
         # Define dictionaries for menus - constants
         self.menu_actions = {}
 
+
     # =======================
     #     MENU FUNCTIONS
     # =======================
@@ -24,9 +25,10 @@ class Menu():
         print("2. Advanced search")
         print("0. Quit")
         choice = input(" >>  ")
-        Menu.exec_menu(self, choice)
+        Menu.exec_actions_on_main_menu(self, choice)
 
     # Execute main menu
+
     def exec_menu(self, choice):
         os.system("cls")
         ch = choice.lower()
@@ -65,9 +67,10 @@ class Menu():
     def advanced_search(self):
         pass
 
+
     # Back to main menu
     def back(self):
-        Menu.menu_actions['main_menu'](self)
+        Menu.main_menu_actions['main_menu'](self)
 
 
     # Exit program
@@ -80,12 +83,14 @@ class Menu():
     # =======================
 
     # Menu definition
-    menu_actions = {
+    main_menu_actions = {
         'main_menu': main_menu,
         '1': basic_search,
         '2': advanced_search,
         '0': exit,
     }
+
+
 
 # =======================
 #      MAIN PROGRAM
