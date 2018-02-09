@@ -65,6 +65,7 @@ class Menu():
         print(result)
 
 
+
         Menu.main_menu(self)
 
     def advanced_search(self):

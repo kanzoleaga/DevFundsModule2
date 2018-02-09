@@ -2,10 +2,9 @@
 class Search perform the search on a given path
 working according custom filters
 """
-from  src.com.jalasoft.search_files.search.directory import Directory
-from  src.com.jalasoft.search_files.search.file import  File
+from  src.com.jalasoft.search_files.search.directory import *
+from  src.com.jalasoft.search_files.search.file import *
 import os
-import fnmatch
 from src.com.jalasoft.search_files.search.search_criteria import *
 from src.com.jalasoft.search_files.utils.logging_config import logger
 
@@ -31,21 +30,22 @@ class Search():
         """
         :return:
         """
-
+        result1 = []
         logger.info("search_files_and_directories : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
-            for a_dir in directories:
-                directory = Directory(os.path.join(root, a_dir), a_dir)
-                print(directory.get_path)
-                self.result.append(directory.get_path())
+            for dir in directories:
+                directory = Directory(os.path.join(root, dir), dir)
+                result1.append(directory.get_path())
+               # print (result1)
 
             for file in files:
                 file = File(os.path.join(root, file), file)
-                #print(file.get_path())
-                self.result.append(file.get_path())
-                #print(self.result)
-        logger.info("search_files_and_directories : Exit")
-        return self.result
+                result1.append(file.get_path())
+        print(result1)
+                
+        #logger.info("search_files_and_directories : Exit")
+        return (result1)
+
 
     def search_all_files(self):
         logger.info("search_all_files : Enter")
