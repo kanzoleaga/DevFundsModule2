@@ -57,8 +57,13 @@ class Menu():
             asset_type = None
         search = Search()
         search.set_basic_search_criteria(path, name, extension, asset_type)
-        print(search.search_by_criteria())
+        print(search.criteria.get_criteria_value('path'))
+        print(search.criteria.get_criteria_value('name'))
+        print(search.criteria.get_criteria_value('extension'))
         print(search.criteria.get_criteria_value('asset_type'))
+        resutlado = search.search_by_criteria()
+        print(len(resutlado))
+
 
         Menu.main_menu(self)
 
