@@ -43,7 +43,7 @@ class Menu():
 
     # Main menu Actions:
     def basic_search(self):
-        path = input("Enter the path >>  ")
+        path = str(input("Enter the path >>  "))
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
         name = input("Enter the name of the file (empty for all) >>  ")
@@ -57,8 +57,13 @@ class Menu():
             asset_type = None
         search = Search()
         search.set_basic_search_criteria(path, name, extension, asset_type)
-        print(search.search_by_criteria())
+        print(search.criteria.get_criteria_value('path'))
+        print(search.criteria.get_criteria_value('name'))
+        print(search.criteria.get_criteria_value('extension'))
         print(search.criteria.get_criteria_value('asset_type'))
+        result = search.search_by_criteria()
+        print(result)
+
 
         Menu.main_menu(self)
 

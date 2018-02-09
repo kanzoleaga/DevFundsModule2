@@ -25,7 +25,7 @@ class Search():
 
     def search_by_criteria(self):
         if self.criteria.get_criteria_value('name') == None and self.criteria.get_criteria_value('asset_type') == None and self.criteria.get_criteria_value('extension') == None:
-            Search.search_files_and_directories(self)
+            self.result = self.search_files_and_directories()
 
     def search_files_and_directories(self):
         """
@@ -34,13 +34,16 @@ class Search():
 
         logger.info("search_files_and_directories : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
-            for dir in directories:
-                directory = Directory(os.path.join(root, dir), dir)
+            for a_dir in directories:
+                directory = Directory(os.path.join(root, a_dir), a_dir)
+                print(directory.get_path)
                 self.result.append(directory.get_path())
 
             for file in files:
                 file = File(os.path.join(root, file), file)
+                #print(file.get_path())
                 self.result.append(file.get_path())
+                #print(self.result)
         logger.info("search_files_and_directories : Exit")
         return self.result
 
