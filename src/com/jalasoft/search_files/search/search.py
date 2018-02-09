@@ -41,6 +41,7 @@ class Search():
             for file in files:
                 file = File(os.path.join(root, file), file)
                 self.result.append(file.get_path())
+                
         logger.info("search_files_and_directories : Exit")
         return self.result
 
