@@ -23,28 +23,25 @@ class Search():
         self.criteria = SearchCriteria(path, name, extension, size, asset_type)
 
     def search_by_criteria(self):
-        if self.criteria.get_criteria_value('name') == None and self.criteria.get_criteria_value('asset_type') == None and self.criteria.get_criteria_value('extension') == None:
-            self.result = self.search_files_and_directories()
+        if self.criteria.get_criteria_value('name') == None \
+                and self.criteria.get_criteria_value('asset_type') == None\
+                and self.criteria.get_criteria_value('extension') == None:
+            self.search_files_and_directories()
 
     def search_files_and_directories(self):
         """
         :return:
         """
-        result1 = []
         logger.info("search_files_and_directories : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             for dir in directories:
                 directory = Directory(os.path.join(root, dir), dir)
-                result1.append(directory.get_path())
-               # print (result1)
+                self.result.append(directory.get_path())
 
             for file in files:
                 file = File(os.path.join(root, file), file)
-                result1.append(file.get_path())
-        print(result1)
-                
-        #logger.info("search_files_and_directories : Exit")
-        return (result1)
+                self.result.append(file.get_path())
+        logger.info("search_files_and_directories : Exit")
 
 
     def search_all_files(self):
@@ -86,8 +83,8 @@ class Search():
 
     def search_files_and_directories_by_name(self):
         """
+        Searches all file and directories from a path, assiming that the seach criteria has only path defined
 
-        :param name:
         :return:
         """
         logger.info("search_files_and_directories_by_name : Enter")

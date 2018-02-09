@@ -1,7 +1,7 @@
 import sys
 import os
-import src.com.jalasoft.search_files.search.search
-from src.com.jalasoft.search_files.search.search_criteria import *
+from src.com.jalasoft.search_files.search.search import *
+
 
 class Menu():
     def __init__(self):
@@ -53,12 +53,8 @@ class Menu():
             asset_type = None
         search = Search()
         search.set_basic_search_criteria(path, name, extension, asset_type)
-        print(search.criteria.get_criteria_value('path'))
-        print(search.criteria.get_criteria_value('name'))
-        print(search.criteria.get_criteria_value('extension'))
-        print(search.criteria.get_criteria_value('asset_type'))
-        result = search.search_by_criteria()
-        print(result)
+        search.search_by_criteria()
+        print(search.result)
 
 
 
