@@ -1,10 +1,6 @@
-# =======================================================================
-
-# Import the modules needed to run the script.
 import sys
 import os
-from src.com.jalasoft.search_files.utils.validator import *
-from  src.com.jalasoft.search_files.search.search import Search
+import src.com.jalasoft.search_files.search.search
 from src.com.jalasoft.search_files.search.search_criteria import *
 
 class Menu():
