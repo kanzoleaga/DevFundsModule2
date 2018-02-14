@@ -45,15 +45,21 @@ class Menu():
         name = input("Enter the name of the file (empty for all) >>  ")
         if str(name) == '':
             name = None
-        extension = input("Enter the extension (empty for all) >>  ")
+        extension = input("Enter the extension (.exe/.py) (empty for all) >>  ")
         if str(extension) == '':
             extension = None
-        asset_type = input("Enter the asset_type (dir/file/empty for all) >>  ")
-        if str(asset_type) == '':
-            asset_type = None
+        if extension == None:
+            asset_type = input("Enter the asset_type (dir/file/empty for all) >>  ")
+            if str(asset_type) == '':
+                asset_type = None
+        else:
+            asset_type = 'file'
         search = Search()
         search.set_basic_search_criteria(path, name, extension, asset_type)
+        print ('asset_type: ', search.criteria.get_criteria_value('asset_type'))
+        print('extension criteria: ', search.criteria.get_criteria_value('extension'))
         search.search_by_criteria()
+        #search.search_any_criteria()
         print(search.result)
 
 
