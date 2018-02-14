@@ -72,15 +72,18 @@ class Search():
                 """
         logger.info("search_files_and_directories : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
-            for dir in directories:
-                directory = Directory(os.path.join(root, dir), dir)
-                if self.satisfies_criteria(directory):
-                    self.result.append(directory.get_path())
+            asset_type_criteria = self.criteria.get_criteria_value('asset_type')
+            if asset_type_criteria == None or asset_type_criteria == 'dir':
+                for dir in directories:
+                    directory = Directory(os.path.join(root, dir), dir)
+                    if self.satisfies_criteria(directory):
+                        self.result.append(directory.get_path())
 
-            for file in files:
-                file = File(os.path.join(root, file), file)
-                if self.satisfies_criteria(file):
-                    self.result.append(file.get_path())
+            if asset_type_criteria == None or asset_type_criteria == 'file':
+                for file in files:
+                    file = File(os.path.join(root, file), file)
+                    if self.satisfies_criteria(file):
+                        self.result.append(file.get_path())
         logger.info("search_files_and_directories : Exit")
 
     def search_files_and_directories(self):
