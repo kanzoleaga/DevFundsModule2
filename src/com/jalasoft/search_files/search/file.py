@@ -2,6 +2,7 @@
 File class inheritance from Asset
 """
 import os
+import win32security
 
 from src.com.jalasoft.search_files.search.asset import Asset
 
@@ -22,10 +23,9 @@ class File(Asset):
     # Owner was not set as pert of the constructor because efficiency, It will be called only
     # if the search criteria includes owner
     def set_owner(self):
-        # file_and_folder = win32security.GetFileSecurity(filename, win32security.OWNER_SECURITY_INFORMATION)
-        # username = win32security.LookupAccountSid(None, file_and_folder.GetSecurityDescriptorOwner())
-        # Since this is not working yet adding any owner
-        self.owner = 'kanzoleaga'
+        file_and_folder = win32security.GetFileSecurity(self.path, win32security.OWNER_SECURITY_INFORMATION)
+        username = win32security.LookupAccountSid(None, file_and_folder.GetSecurityDescriptorOwner())
+        return username[0]
 
 
 

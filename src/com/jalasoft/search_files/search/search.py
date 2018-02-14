@@ -270,4 +270,3 @@ class Search():
                 counter += 1
         logger.info("count_files_by_directory : Exit")
         return counter
-
