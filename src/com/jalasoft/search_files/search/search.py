@@ -29,7 +29,7 @@ class Search():
             self.search_files_and_directories()
 
     def satisfies_criteria(self, asset):
-        satisfies = True
+        # satisfies = True
         asset_type_criteria = self.criteria.get_criteria.value('asset_type')
         if isinstance(asset, Directory) and (asset_type_criteria is None or asset_type_criteria == 'dir'):
             pass
@@ -41,11 +41,14 @@ class Search():
             extension_criteria = self.criteria.get_criteria.value('extension')
             if extension_criteria is not None and asset.extension != extension_criteria:
                 return False
-            owner_criteria = self.criteria.get_criteria.value('owner')
-            if owner_criteria is not None and asset.owner != owner_criteria:
-                return False
+            # owner_criteria = self.criteria.get_criteria.value('owner')
+            # if owner_criteria is not None and asset.owner != owner_criteria:
+            #     return False
             size_criteria = self.criteria.get_criteria.value('size')
-            if size_criteria is not None and asset.size != size_criteria:
+            size_less_than_criteria = self.criteria.get_criteria.value('size_less_than')
+            if size_criteria is not None and size_less_than_criteria == True and asset.size > size_criteria:
+                return False
+            if size_criteria is not None and size_less_than_criteria == False and asset.size < size_criteria:
                 return False
 
 

@@ -22,9 +22,9 @@ class File(Asset):
         # username = win32security.LookupAccountSid(None, file_and_folder.GetSecurityDescriptorOwner())
         self.owner = 'kanzoleaga'
 
-file = File('C:/Users\Katerina Anzoleaga/Documents', 'hello')
-file.set_owner()
-print(file.owner)
+# file = File('C:/Users\Katerina Anzoleaga/Documents', 'hello')
+# file.set_owner()
+# print(file.owner)
 
 
 

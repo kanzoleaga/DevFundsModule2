@@ -1,6 +1,6 @@
 class SearchCriteria(object):
 
-    def __init__(self, path, name=None, extension=None, asset_type= None, size=None, size_unit=None, create_date_range=None):
+    def __init__(self, path, name=None, extension=None, asset_type= None, size=None, size_less_than=None, create_date_range=None):
 
         """ **kwargs
         This is the constructor of the SearchCriteria class.
@@ -20,7 +20,7 @@ class SearchCriteria(object):
                         'extension': extension,
                         'asset_type': asset_type,
                         'size': size,
-                        'size_unit': size_unit,
+                        'size_less_than': size_less_than,
                         'create_date_range': create_date_range
         }
 
