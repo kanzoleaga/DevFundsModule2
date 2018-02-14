@@ -10,6 +10,8 @@ class Directory(Asset):
         self.child_dirs = []
         self.size = 0
 
+    # Size was not set as pert of the constructor because of efficiency, It will be called only
+    # if the search criteria includes size
     def set_size(self):
         start_path = self.path
         total_size = 0
@@ -20,9 +22,6 @@ class Directory(Asset):
         self.size = total_size
 
 
-# dir = Directory('C:\Program Files\Git', 'Git')
-# dir.set_size()
-# print(dir.size)
 
 
 

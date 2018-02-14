@@ -48,6 +48,7 @@ class Menu():
         extension = input("Enter the extension (.exe/.py) (empty for all) >>  ")
         if str(extension) == '':
             extension = None
+        # Asset type will only be asked if extension was not set, we assume directories do not have extension
         if extension == None:
             asset_type = input("Enter the asset_type (dir/file/empty for all) >>  ")
             if str(asset_type) == '':
@@ -56,10 +57,7 @@ class Menu():
             asset_type = 'file'
         search = Search()
         search.set_basic_search_criteria(path, name, extension, asset_type)
-        print ('asset_type: ', search.criteria.get_criteria_value('asset_type'))
-        print('extension criteria: ', search.criteria.get_criteria_value('extension'))
-        search.search_by_criteria()
-        #search.search_any_criteria()
+        search.search_any_criteria()
         print(search.result)
 
 
