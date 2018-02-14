@@ -100,14 +100,11 @@ ENV/
 # mypy
 .mypy_cache/
 .idea/workspace.xml
-<<<<<<< HEAD
-=======
 .idea/workspace.xml
 .idea/misc.xml
 .idea/DevFundsModule2.iml
 .idea/DevFundsModule2.iml
 .idea/workspace.xml
->>>>>>> 1696add170563cc76fac99a587b01d2430cbbd7e
 venvDevFund2/Scripts/activate.bat
 venvDevFund2/Scripts/activate
 venvDevFund2/pyvenv.cfg
@@ -119,3 +116,11 @@ venvDevFund2/pyvenv.cfg
 .idea/DevFundsModule2.iml
 .idea/workspace.xml
 .idea/DevFundsModule2.iml
+
+.idea/DevFundsModle2.iml
+.idea/modules.xml
+.idea/vcs.xml
+*.xml
+.idea/workspace.xml
+log/search_files.log.2018-01-30_08
+.idea/workspace.xml
