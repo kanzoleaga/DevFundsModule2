@@ -28,6 +28,30 @@ class Search():
                 and self.criteria.get_criteria_value('extension') == None:
             self.search_files_and_directories()
 
+    def satisfies_criteria(self, asset):
+        satisfies = True
+        asset_type_criteria = self.criteria.get_criteria.value('asset_type')
+        if isinstance(asset, Directory) and (asset_type_criteria is None or asset_type_criteria == 'dir'):
+            pass
+
+        if isinstance(asset, File) and (asset_type_criteria is None or asset_type_criteria == 'file'):
+            name_criteria = self.criteria.get_criteria.value('name')
+            if name_criteria is not None and asset.name != name_criteria:
+                return False
+            extension_criteria = self.criteria.get_criteria.value('extension')
+            if extension_criteria is not None and asset.extension != extension_criteria:
+                return False
+            owner_criteria = self.criteria.get_criteria.value('owner')
+            if owner_criteria is not None and asset.owner != owner_criteria:
+                return False
+            size_criteria = self.criteria.get_criteria.value('size')
+            if size_criteria is not None and asset.size != size_criteria:
+                return False
+
+
+
+
+
     def search_files_and_directories(self):
         """
         :return:
@@ -143,7 +167,6 @@ class Search():
                 if directory_size > self.criteria.get_criteria_value('size'):
                     size_kb = "{0:.2f}".format(directory_size / 1024)
                     self.result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory_size) + " bytes )")
-
 
             for file in files:
                 file = File(os.path.join(root, file), file)
