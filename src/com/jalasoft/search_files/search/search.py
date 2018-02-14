@@ -2,36 +2,93 @@
 class Search perform the search on a given path
 working according custom filters
 """
-from  src.com.jalasoft.search_files.search.directory import Directory
-from  src.com.jalasoft.search_files.search.file import  File
+from  src.com.jalasoft.search_files.search.directory import *
+from  src.com.jalasoft.search_files.search.file import *
 import os
-import fnmatch
 from src.com.jalasoft.search_files.search.search_criteria import *
 from src.com.jalasoft.search_files.utils.logging_config import logger
 
 class Search():
     def __init__(self):
         """
-
         :param base_path: this parameter is main to search by any criteria
         """
         self.result = []
         self.criteria = {}
 
-    def set_basic_search_criteria(self, path, name=None, extension=None):
-        self.criteria = SearchCriteria(path, name, extension)
+    def set_basic_search_criteria(self, path, name=None, extension=None, asset_type=None):
+        self.criteria = SearchCriteria(path, name, extension, asset_type)
 
-    def set_advanced_search_criteria(self, path, name=None, extension=None, size=None):
-        self.criteria = SearchCriteria(path, name, extension, size)
+    def set_advanced_search_criteria(self, path, name=None, extension=None, size=None, asset_type=None):
+        self.criteria = SearchCriteria(path, name, extension, size, asset_type)
+
+    def search_by_criteria(self):
+        if self.criteria.get_criteria_value('name') == None \
+                and self.criteria.get_criteria_value('asset_type') == None\
+                and self.criteria.get_criteria_value('extension') == None:
+            self.search_files_and_directories()
+
+    def satisfies_criteria(self, asset):
+        # satisfies = True
+        name_criteria = self.criteria.get_criteria_value('name')
+        extension_criteria = self.criteria.get_criteria_value('extension')
+        size_criteria = self.criteria.get_criteria_value('size')
+        # owner_criteria = self.criteria.get_criteria.value('owner')
+        asset_type_criteria = self.criteria.get_criteria_value('asset_type')
+        if asset_type_criteria == 'dir' and isinstance(asset, File):
+            return False
+        if asset_type_criteria == 'file' and isinstance(asset, Directory):
+            return False
+        if isinstance(asset, Directory) and (asset_type_criteria is None or asset_type_criteria == 'dir'):
+            if name_criteria is not None and name_criteria.lower() not in asset.name.lower():
+                return False
+            # owner_criteria = self.criteria.get_criteria.value('owner')
+            # if owner_criteria is not None and asset.owner != owner_criteria:
+            #     return False
+            size_less_than_criteria = self.criteria.get_criteria_value('size_less_than')
+            if size_criteria is not None and size_less_than_criteria == True and asset.size > size_criteria:
+                return False
+            if size_criteria is not None and size_less_than_criteria == False and asset.size < size_criteria:
+                return False
+
+        if isinstance(asset, File) and (asset_type_criteria is None or asset_type_criteria == 'file'):
+            if name_criteria is not None and name_criteria.lower() not in asset.name.lower():
+                return False
+            #if file.get_name().lower().endswith(("." + self.criteria.get_criteria_value('extension')).lower()):
+            print('extension_criteria: ', extension_criteria, 'asset.extension: ', asset.extension)
+            if extension_criteria is not None and asset.extension.lower() != extension_criteria.lower():
+                return False
+            # if owner_criteria is not None and asset.owner != owner_criteria:
+            #     return False
+            if size_criteria is not None and size_less_than_criteria == True and asset.size > size_criteria:
+                return False
+            if size_criteria is not None and size_less_than_criteria == False and asset.size < size_criteria:
+                return False
+        return True
 
 
+
+    def search_any_criteria(self):
+        """
+                :return:
+                """
+        logger.info("search_files_and_directories : Enter")
+        for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
+            for dir in directories:
+                directory = Directory(os.path.join(root, dir), dir)
+                if self.satisfies_criteria(directory):
+                    self.result.append(directory.get_path())
+
+            for file in files:
+                file = File(os.path.join(root, file), file)
+                if self.satisfies_criteria(file):
+                    self.result.append(file.get_path())
+        logger.info("search_files_and_directories : Exit")
 
     def search_files_and_directories(self):
         """
-
         :return:
         """
-
         logger.info("search_files_and_directories : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             for dir in directories:
@@ -42,7 +99,7 @@ class Search():
                 file = File(os.path.join(root, file), file)
                 self.result.append(file.get_path())
         logger.info("search_files_and_directories : Exit")
-        return self.result
+
 
     def search_all_files(self):
         logger.info("search_all_files : Enter")
@@ -83,8 +140,8 @@ class Search():
 
     def search_files_and_directories_by_name(self):
         """
+        Searches all file and directories from a path, assiming that the seach criteria has only path defined
 
-        :param name:
         :return:
         """
         logger.info("search_files_and_directories_by_name : Enter")
@@ -101,7 +158,7 @@ class Search():
         logger.info("search_files_and_directories_by_name : Exit")
         return self.result
 
-    def search_files_by_name(self, name):
+    def search_files_by_name(self):
         """
 
         :param name:
@@ -111,10 +168,11 @@ class Search():
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             for file in files:
                 file = File(os.path.join(root, file), file)
-                if name.lower() in file.get_name().lower():
+                if self.criteria.get_criteria_value('name').lower() in file.get_name().lower():
                     self.result.append(file.get_path())
         logger.info("search_files_by_name : Exit")
         return self.result
+
 
     def search_files_and_directories_less_than_size_bytes(self):
         logger.info("search_files_and_directories_less_than_size_bytes : Enter")
@@ -125,7 +183,6 @@ class Search():
                 if directory_size < self.criteria.get_criteria_value('size'):
                     size_kb = "{0:.2f}".format(directory_size / 1024)
                     self.result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory_size) + " bytes )")
-
             for file in files:
                 file = File(os.path.join(root, file), file)
                 if file.get_size() < self.criteria.get_criteria_value('size'):
@@ -144,7 +201,6 @@ class Search():
                     size_kb = "{0:.2f}".format(directory_size / 1024)
                     self.result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory_size) + " bytes )")
 
-
             for file in files:
                 file = File(os.path.join(root, file), file)
                 if file.get_size() > self.criteria.get_criteria_value('size'):
@@ -161,7 +217,6 @@ class Search():
                 if file.get_size() < self.criteria.get_criteria_value('size'):
                     size_kb = "{0:.2f}".format(file.get_size() / 1024)
                     self.result.append(file.get_path() + " -> " + str(size_kb) + " KB (" + str(file.get_size()) + " bytes )")
-
         logger.info("search_files_less_than_size_bytes : Exit")
         return self.result
 

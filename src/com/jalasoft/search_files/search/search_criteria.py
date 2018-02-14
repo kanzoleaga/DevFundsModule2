@@ -1,7 +1,8 @@
 class SearchCriteria(object):
-    def __init__(self, path, name=None, extension=None, size=None, owner=None, create_date_range=None):
 
-        """
+    def __init__(self, path, name=None, extension=None, asset_type= None, size=None, size_less_than=None, create_date_range=None):
+
+        """ **kwargs
         This is the constructor of the SearchCriteria class.
         Where size_range is a tuple (from_size, to_size)
         Where create_date_range is a tuple (from_date, to_date)
@@ -15,12 +16,14 @@ class SearchCriteria(object):
         """
         self.criteria = {
                         'path': path,
-                        'extension': extension,
                         'name': name,
+                        'extension': extension,
+                        'asset_type': asset_type,
                         'size': size,
-                        'owner': owner,
+                        'size_less_than': size_less_than,
                         'create_date_range': create_date_range
         }
+
 
     def get_criteria_value(self, key):
         """
