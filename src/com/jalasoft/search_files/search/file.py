@@ -14,17 +14,20 @@ class File(Asset):
     def get_extension(self):
         return self.extension
 
+    # Size was not set as pert of the constructor because of efficiency, It will be called only
+    # if the search criteria includes size
     def set_size(self):
         self.size = os.path.getsize(self.path)
 
+    # Owner was not set as pert of the constructor because efficiency, It will be called only
+    # if the search criteria includes owner
     def set_owner(self):
         # file_and_folder = win32security.GetFileSecurity(filename, win32security.OWNER_SECURITY_INFORMATION)
         # username = win32security.LookupAccountSid(None, file_and_folder.GetSecurityDescriptorOwner())
+        # Since this is not working yet adding any owner
         self.owner = 'kanzoleaga'
 
-# file = File('C:/Users\Katerina Anzoleaga/Documents', 'hello')
-# file.set_owner()
-# print(file.owner)
+
 
 
 
