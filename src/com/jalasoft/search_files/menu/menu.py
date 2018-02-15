@@ -72,12 +72,16 @@ class Menu():
         if str(extension) == '':
             extension = None
         # Asset type will only be asked if extension was not set, we assume directories do not have extension
-        if extension == None:
+        owner = input("Enter the owner (empty for any) >>  ")
+        if str(owner) == '':
+            owner = None
+        if extension == None and owner == None:
             asset_type = input("Enter the asset_type (dir/file/empty for all) >>  ")
             if str(asset_type) == '':
                 asset_type = None
         else:
             asset_type = 'file'
+
         size = input("Size less than KB (empty for any size) >>  ")
         size_less_than = True
         if str(size) == '':
@@ -95,12 +99,11 @@ class Menu():
                 if size is not None:
                     while not is_number(size):
                         size = input("Enter a valid number for size greater than (empty for any size) >> ")
-        owner = input("Enter the owner (empty for any) >>  ")
-        if str(owner) == '':
-            owner = None
 
+        if size is not None:
+            size = int(size)*1024
         search = Search()
-        search.set_advanced_search_criteria(path, name, extension, asset_type, int(size)*1024, size_less_than, owner)
+        search.set_advanced_search_criteria(path, name, extension, asset_type, size, size_less_than, owner)
         search.search_any_criteria()
         print(search.result)
         Menu.main_menu(self)
