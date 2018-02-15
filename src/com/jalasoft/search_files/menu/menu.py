@@ -42,15 +42,15 @@ class Menu():
         path = str(input("Enter the path >>  "))
         while not os.path.isdir(path):
             path = input("Invalid path. Please enter a valid path >>  ")
-        name = input("Enter the name of the file (empty for all) >>  ")
+        name = input("Enter the name of the file (empty to search all files and directories) >>  ")
         if str(name) == '':
             name = None
-        extension = input("Enter the extension (.exe/.py) (empty for all) >>  ")
+        extension = input("Enter the extension (.exe/.py) (empty to search all files and directories) >>  ")
         if str(extension) == '':
             extension = None
         # Asset type will only be asked if extension was not set, we assume directories do not have extension
         if extension == None:
-            asset_type = input("Enter the asset_type (dir/file/empty for all) >>  ")
+            asset_type = input("Enter the asset_type (dir/file/empty to search all files and directories) >>  ")
             if str(asset_type) == '':
                 asset_type = None
         else:
