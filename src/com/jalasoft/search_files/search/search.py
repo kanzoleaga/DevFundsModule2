@@ -19,8 +19,8 @@ class Search():
     def set_basic_search_criteria(self, path, name=None, extension=None, asset_type=None):
         self.criteria = SearchCriteria(path, name, extension, asset_type)
 
-    def set_advanced_search_criteria(self, path, name=None, extension=None, size=None, asset_type=None):
-        self.criteria = SearchCriteria(path, name, extension, size, asset_type)
+    def set_advanced_search_criteria(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None):
+        self.criteria = SearchCriteria(path, name, extension, asset_type, size, size_less_than, owner)
 
     def search_by_criteria(self):
         if self.criteria.get_criteria_value('name') == None \
@@ -32,6 +32,7 @@ class Search():
         name_criteria = self.criteria.get_criteria_value('name')
         extension_criteria = self.criteria.get_criteria_value('extension')
         size_criteria = self.criteria.get_criteria_value('size')
+        size_less_than_criteria = self.criteria.get_criteria_value('size_less_than')
         #owner_criteria = self.criteria.get_criteria.value('owner')
         asset_type_criteria = self.criteria.get_criteria_value('asset_type')
 
