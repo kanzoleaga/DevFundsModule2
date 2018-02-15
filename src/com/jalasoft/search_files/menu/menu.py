@@ -106,8 +106,11 @@ class Menu():
             size = int(size)*1024
 
         create_date = input("Enter the creation date of the file (YYYY-MM-DD-hh-mm) (empty for any) >>  ")
-        while not is_date_time(create_date):
-            size = input("Enter a valid creation date (empty for any date) >> ")
+        if str(create_date) == '':
+            create_date = None
+        else:
+            while not is_date_time(create_date):
+                size = input("Enter a valid creation date (empty for any date) >> ")
         search = Search()
         search.set_advanced_search_criteria(path, name, extension, asset_type, size, size_less_than, owner, create_date)
         search.search_any_criteria()
