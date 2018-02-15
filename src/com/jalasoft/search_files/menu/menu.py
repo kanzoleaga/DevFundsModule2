@@ -71,10 +71,11 @@ class Menu():
         extension = input("Enter the extension (.exe/.py) (empty for all) >>  ")
         if str(extension) == '':
             extension = None
-        # Asset type will only be asked if extension was not set, we assume directories do not have extension
         owner = input("Enter the owner (empty for any) >>  ")
         if str(owner) == '':
             owner = None
+        # Asset type will only be asked if extension was or owner was not set,
+        # we assume directories do not have extension nor owner option is allowed for them
         if extension == None and owner == None:
             asset_type = input("Enter the asset_type (dir/file/empty for all) >>  ")
             if str(asset_type) == '':
@@ -90,6 +91,7 @@ class Menu():
         if size is not None:
             while not is_number(size):
                 size = input("Enter a valid number for size less than (empty for any size) >> ")
+        # Ask for greater than only if less than was not entered:
         if size is None:
             size = input("Size greater than KB (empty for any size) >>  ")
             size_less_than = False
