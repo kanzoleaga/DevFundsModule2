@@ -7,6 +7,7 @@ from  src.com.jalasoft.search_files.search.file import *
 import os
 from src.com.jalasoft.search_files.search.search_criteria import *
 from src.com.jalasoft.search_files.utils.logging_config import logger
+from beautifultable import BeautifulTable
 
 class Search():
     def __init__(self):
@@ -74,6 +75,8 @@ class Search():
         """
                 :return:
                 """
+        last_result = BeautifulTable()
+        last_result.column_headers = ["path", "size",  "Owner", "Asset Type", "Create Date"]
         logger.info("search_files_and_directories : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             asset_type_criteria = self.criteria.get_criteria_value('asset_type')
@@ -81,12 +84,9 @@ class Search():
                 for dir in directories:
                     directory = Directory(os.path.join(root, dir), dir)
                     if self.satisfies_criteria(directory):
-                        print(self.line)
-
                         size_kb = "{0:.2f}".format(directory.get_size() / 1024)
-                        #self.result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )")
-                        print('Directory      :', directory.get_path() )
-                        print('Directory Size      :', str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )")
+                        size_print =  str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )"
+                        last_result.append_row([directory.get_path(), size_print,  "", "Directory",directory.get_created_date()])
 
 
 
@@ -97,15 +97,12 @@ class Search():
                     # if create_date_criteria is not None:
                     #     file.set_create_date()
                     if self.satisfies_criteria(file):
-                        #self.result.append(file.get_path())
-                        size_kb = "{0:.2f}".format(file.get_size() / 1024)
-                        #self.result.append(file.get_path() + " -> " + str(size_kb) + " KB (" + str(file.get_size()) + " bytes )")
-                        print(self.line)
-                        print('File      :', file.get_path() )
-                        print('Owner     :', file.get_owner())
-                        print('Create Date      :', file.get_created_date())
-                        print('File Size (Kb)     :', str(size_kb) + " KB (" + str(file.get_size()) + " bytes )")
 
+                        size_kb = "{0:.2f}".format(file.get_size() / 1024)
+                        size_print = str(size_kb) + " KB (" + str(file.get_size()) + " bytes )"
+                        last_result.append_row([file.get_path(), size_print, file.get_owner(), "File", file.get_created_date()])
+
+        print(last_result)
         logger.info("search_files_and_directories : Exit")
 
     def search_files_and_directories(self):
