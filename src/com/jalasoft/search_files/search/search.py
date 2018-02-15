@@ -78,13 +78,17 @@ class Search():
                 for dir in directories:
                     directory = Directory(os.path.join(root, dir), dir)
                     if self.satisfies_criteria(directory):
-                        self.result.append(directory.get_path())
+                        #self.result.append(directory.get_path())
+                        size_kb = "{0:.2f}".format(directory.get_size() / 1024)
+                        self.result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )")
 
             if asset_type_criteria == None or asset_type_criteria == 'file':
                 for file in files:
                     file = File(os.path.join(root, file), file)
                     if self.satisfies_criteria(file):
-                        self.result.append(file.get_path())
+                        #self.result.append(file.get_path())
+                        size_kb = "{0:.2f}".format(file.get_size() / 1024)
+                        self.result.append(file.get_path() + " -> " + str(size_kb) + " KB (" + str(file.get_size()) + " bytes )")
         logger.info("search_files_and_directories : Exit")
 
     def search_files_and_directories(self):
@@ -95,11 +99,14 @@ class Search():
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             for dir in directories:
                 directory = Directory(os.path.join(root, dir), dir)
-                self.result.append(directory.get_path())
-
+                #self.result.append(directory.get_path())
+                size_kb = "{0:.2f}".format(directory.get_size() / 1024)
+                self.result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )")
             for file in files:
                 file = File(os.path.join(root, file), file)
-                self.result.append(file.get_path())
+                #self.result.append(file.get_path())
+                size_kb = "{0:.2f}".format(file.get_size() / 1024)
+                self.result.append(file.get_path() + " -> " + str(size_kb) + " KB (" + str(file.get_size()) + " bytes )")
         logger.info("search_files_and_directories : Exit")
 
 
