@@ -19,8 +19,8 @@ class Search():
     def set_basic_search_criteria(self, path, name=None, extension=None, asset_type=None):
         self.criteria = SearchCriteria(path, name, extension, asset_type)
 
-    def set_advanced_search_criteria(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None):
-        self.criteria = SearchCriteria(path, name, extension, asset_type, size, size_less_than, owner)
+    def set_advanced_search_criteria(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date):
+        self.criteria = SearchCriteria(path, name, extension, asset_type, size, size_less_than, owner, create_date)
 
     def search_by_criteria(self):
         if self.criteria.get_criteria_value('name') == None \
@@ -74,6 +74,8 @@ class Search():
         logger.info("search_files_and_directories : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             asset_type_criteria = self.criteria.get_criteria_value('asset_type')
+            owner_criteria = self.criteria.get_criteria_value('owner')
+            #craete_date_criteria = self.criteria.get_criteria_value('create_date')
             if asset_type_criteria == None or asset_type_criteria == 'dir':
                 for dir in directories:
                     directory = Directory(os.path.join(root, dir), dir)
@@ -83,6 +85,12 @@ class Search():
             if asset_type_criteria == None or asset_type_criteria == 'file':
                 for file in files:
                     file = File(os.path.join(root, file), file)
+                    # Setting file owner only if this criteria is enabled for the search
+                    if owner_criteria is not None:
+                        file.set_owner()
+                    # Setting file create_date only if this criteria is enabled for the search
+                    # if create_date_criteria is not None:
+                    #     file.set_create_date()
                     if self.satisfies_criteria(file):
                         self.result.append(file.get_path())
         logger.info("search_files_and_directories : Exit")

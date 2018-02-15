@@ -1,6 +1,6 @@
 from src.com.jalasoft.search_files.utils.logging_config import logger
 class SearchCriteria(object):
-    def __init__(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None):
+    def __init__(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None):
 
         """ **kwargs
         This is the constructor of the SearchCriteria class.
@@ -21,7 +21,8 @@ class SearchCriteria(object):
                         'asset_type': asset_type,
                         'size': size,
                         'size_less_than': size_less_than,
-                        'owner': owner
+                        'owner': owner,
+                        'create_date': create_date
         }
 
 

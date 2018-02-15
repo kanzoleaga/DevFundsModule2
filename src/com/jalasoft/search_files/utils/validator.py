@@ -1,3 +1,5 @@
+import datetime
+
 def is_number(value):
     """
     Returns True if the argument is an integer
@@ -8,6 +10,18 @@ def is_number(value):
         int(value)
         return True
     except:
+        return False
+
+def is_date_time(value):
+    """
+    Returns true if the value entered is a valid date
+    :param value: Date
+    :return: bool
+    """
+    try:
+        valid_date = datetime.datetime.strptime(value, '%Y-%m-%d-%H-%M')
+        return True
+    except ValueError:
         return False
 
 def is_posiive(value):
