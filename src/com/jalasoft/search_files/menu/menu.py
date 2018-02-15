@@ -1,5 +1,5 @@
 import sys
-import os
+from src.com.jalasoft.search_files.utils.validator import *
 from src.com.jalasoft.search_files.search.search import *
 
 
@@ -59,13 +59,51 @@ class Menu():
         search.set_basic_search_criteria(path, name, extension, asset_type)
         search.search_any_criteria()
         print(search.result)
-
-
-
         Menu.main_menu(self)
 
     def advanced_search(self):
-        pass
+        path = str(input("Enter the path >>  "))
+        while not os.path.isdir(path):
+            path = input("Invalid path. Please enter a valid path >>  ")
+        name = input("Enter the name of the file (empty for all) >>  ")
+        if str(name) == '':
+            name = None
+        extension = input("Enter the extension (.exe/.py) (empty for all) >>  ")
+        if str(extension) == '':
+            extension = None
+        # Asset type will only be asked if extension was not set, we assume directories do not have extension
+        if extension == None:
+            asset_type = input("Enter the asset_type (dir/file/empty for all) >>  ")
+            if str(asset_type) == '':
+                asset_type = None
+        else:
+            asset_type = 'file'
+        size = input("Size less than KB (empty for any size) >>  ")
+        size_less_than = True
+        if str(size) == '':
+            size = None
+            size_less_than = None
+        if size is not None:
+            while not is_number(size):
+                size = input("Enter a valid number for size less than (empty for any size) >> ")
+        if size is None:
+            size = input("Size greater than KB (empty for any size) >>  ")
+            size_less_than = False
+            if str(size) == '':
+                size = None
+                size_less_than = None
+                if size is not None:
+                    while not is_number(size):
+                        size = input("Enter a valid number for size greater than (empty for any size) >> ")
+        owner = input("Enter the owner (empty for any) >>  ")
+        if str(owner) == '':
+            owner = None
+
+        search = Search()
+        search.set_advanced_search_criteria(path, name, extension, asset_type, int(size)*1024, size_less_than, owner)
+        search.search_any_criteria()
+        print(search.result)
+        Menu.main_menu(self)
 
     # Back to main menu
     def back(self):
