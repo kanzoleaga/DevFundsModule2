@@ -1,3 +1,4 @@
+from src.com.jalasoft.search_files.utils.logging_config import logger
 class SearchCriteria(object):
 
     def __init__(self, path, name=None, extension=None, asset_type= None, size=None, size_less_than=None, create_date_range=None):
@@ -32,8 +33,11 @@ class SearchCriteria(object):
         :param key: str the key name of the criteria
         :return:  the value of the criteria it may be an string or an integer
         """
+        logger.info("get_criteria_value : Enter")
         if key in self.criteria.keys():
             return self.criteria[key]
+            logger.info("get_criteria_value : Exit")
         else:
             raise ValueError('Invalid key. Key value' + key + 'is not a valid criteria')
+            logger.info("get_criteria_value : Exit")
 

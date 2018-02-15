@@ -88,13 +88,3 @@ class Menu():
         '2': advanced_search,
         '0': exit,
     }
-
-# =======================
-#      MAIN PROGRAM
-# =======================
-
-# Main Program
-if __name__ == "__main__":
-    # Launch main menu
-    menu = Menu()
-    menu.main_menu()
