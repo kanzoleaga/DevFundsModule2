@@ -36,8 +36,6 @@ class SearchCriteria(object):
         logger.info("get_criteria_value : Enter")
         if key in self.criteria.keys():
             return self.criteria[key]
-            logger.info("get_criteria_value : Exit")
         else:
             raise ValueError('Invalid key. Key value' + key + 'is not a valid criteria')
-            logger.info("get_criteria_value : Exit")
 
