@@ -74,7 +74,7 @@ class Menu():
         owner = input("Enter the owner (empty for any) >>  ")
         if str(owner) == '':
             owner = None
-        # Asset type will only be asked if extension was or owner was not set,
+        # Asset type will only be asked if extension or owner were not set,
         # we assume directories do not have extension nor owner option is allowed for them
         if extension == None and owner == None:
             asset_type = input("Enter the asset_type (dir/file/empty for all) >>  ")
@@ -101,11 +101,15 @@ class Menu():
                 if size is not None:
                     while not is_number(size):
                         size = input("Enter a valid number for size greater than (empty for any size) >> ")
-
+        # Changing unit type to KB
         if size is not None:
             size = int(size)*1024
+
+        create_date = input("Enter the creation date of the file (YYYY-MM-DD-hh-mm) (empty for any) >>  ")
+        while not is_date_time(create_date):
+            size = input("Enter a valid creation date (empty for any date) >> ")
         search = Search()
-        search.set_advanced_search_criteria(path, name, extension, asset_type, size, size_less_than, owner)
+        search.set_advanced_search_criteria(path, name, extension, asset_type, size, size_less_than, owner, create_date)
         search.search_any_criteria()
         print(search.result)
         Menu.main_menu(self)
