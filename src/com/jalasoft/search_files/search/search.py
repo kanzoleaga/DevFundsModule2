@@ -19,7 +19,7 @@ class Search():
     def set_basic_search_criteria(self, path, name=None, extension=None, asset_type=None):
         self.criteria = SearchCriteria(path, name, extension, asset_type)
 
-    def set_advanced_search_criteria(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date):
+    def set_advanced_search_criteria(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None):
         self.criteria = SearchCriteria(path, name, extension, asset_type, size, size_less_than, owner, create_date)
 
     def search_by_criteria(self):
