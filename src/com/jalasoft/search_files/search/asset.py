@@ -18,7 +18,7 @@ class Asset(object):
         self.size = os.path.getsize(path)
         self.is_directory = os.path.isdir(path)
         # Get more details
-        format = '%Y-%m-%d-%H-%M'
+        format = '%Y-%m-%d %H:%M'
         status = os.stat(path)
         self.last_access = datetime.fromtimestamp(status.st_atime)
         self.modified = datetime.fromtimestamp(status.st_mtime)

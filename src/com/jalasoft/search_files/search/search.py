@@ -15,6 +15,7 @@ class Search():
         """
         self.result = []
         self.criteria = {}
+        self.line = '-' * 200
 
     def set_basic_search_criteria(self, path, name=None, extension=None, asset_type=None):
         self.criteria = SearchCriteria(path, name, extension, asset_type)
@@ -80,9 +81,14 @@ class Search():
                 for dir in directories:
                     directory = Directory(os.path.join(root, dir), dir)
                     if self.satisfies_criteria(directory):
-                        #self.result.append(directory.get_path())
+                        print(self.line)
+
                         size_kb = "{0:.2f}".format(directory.get_size() / 1024)
-                        self.result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )")
+                        #self.result.append(directory.get_path() + " -> " + str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )")
+                        print('Directory      :', directory.get_path() )
+                        print('Directory Size      :', str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )")
+
+
 
             if asset_type_criteria == None or asset_type_criteria == 'file':
                 for file in files:
@@ -93,7 +99,13 @@ class Search():
                     if self.satisfies_criteria(file):
                         #self.result.append(file.get_path())
                         size_kb = "{0:.2f}".format(file.get_size() / 1024)
-                        self.result.append(file.get_path() + " -> " + str(size_kb) + " KB (" + str(file.get_size()) + " bytes )")
+                        #self.result.append(file.get_path() + " -> " + str(size_kb) + " KB (" + str(file.get_size()) + " bytes )")
+                        print(self.line)
+                        print('File      :', file.get_path() )
+                        print('Owner     :', file.get_owner())
+                        print('Create Date      :', file.get_created_date())
+                        print('File Size (Kb)     :', str(size_kb) + " KB (" + str(file.get_size()) + " bytes )")
+
         logger.info("search_files_and_directories : Exit")
 
     def search_files_and_directories(self):
