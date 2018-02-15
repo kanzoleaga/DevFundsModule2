@@ -19,7 +19,7 @@ def is_date_time(value):
     :return: bool
     """
     try:
-        valid_date = datetime.datetime.strptime(value, '%Y-%m-%d-%H-%M')
+        valid_date = datetime.datetime.strptime(value, '%Y-%m-%d %H:%M')
         return True
     except ValueError:
         return False

@@ -105,7 +105,7 @@ class Menu():
         if size is not None:
             size = int(size)*1024
 
-        create_date = input("Enter the creation date of the file (YYYY-MM-DD-hh-mm) (empty for any) >>  ")
+        create_date = input("Enter the creation date of the file (YYYY-MM-DD hh:mm) (empty for any) >>  ")
         if str(create_date) == '':
             create_date = None
         else:
