@@ -111,10 +111,24 @@ class Menu():
         else:
             while not is_date_time(create_date):
                 size = input("Enter a valid creation date (empty for any date) >> ")
+
+        modify_date = input("Enter the modified date of the file (YYYY-MM-DD hh:mm) (empty for any) >>  ")
+        if str(modify_date) == '':
+            modify_date = None
+        else:
+            while not is_date_time(modify_date):
+                modify_date = input("Enter a valid modify date (empty for any date) >> ")
+
+        last_access_date = input("Enter the last access date of the file (YYYY-MM-DD hh:mm) (empty for any) >>  ")
+        if str(last_access_date) == '':
+            last_access_date = None
+        else:
+            while not is_date_time(last_access_date):
+                last_access_date = input("Enter a valid last access date (empty for any date) >> ")
+
         search = Search()
-        search.set_advanced_search_criteria(path, name, extension, asset_type, size, size_less_than, owner, create_date)
+        search.set_advanced_search_criteria(path, name, extension, asset_type, size, size_less_than, owner, create_date, modify_date, last_access_date)
         search.search_any_criteria()
-        print(search.result)
         Menu.main_menu(self)
 
     # Back to main menu

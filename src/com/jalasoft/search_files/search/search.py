@@ -21,8 +21,8 @@ class Search():
     def set_basic_search_criteria(self, path, name=None, extension=None, asset_type=None):
         self.criteria = SearchCriteria(path, name, extension, asset_type)
 
-    def set_advanced_search_criteria(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None):
-        self.criteria = SearchCriteria(path, name, extension, asset_type, size, size_less_than, owner, create_date)
+    def set_advanced_search_criteria(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None, modify_date=None, last_access_date=None):
+        self.criteria = SearchCriteria(path, name, extension, asset_type, size, size_less_than, owner, create_date, modify_date, last_access_date)
 
     def search_by_criteria(self):
         if self.criteria.get_criteria_value('name') == None \
@@ -38,6 +38,8 @@ class Search():
         owner_criteria = self.criteria.get_criteria_value('owner')
         asset_type_criteria = self.criteria.get_criteria_value('asset_type')
         create_date_criteria = self.criteria.get_criteria_value('create_date')
+        modify_date_criteria = self.criteria.get_criteria_value('modify_date')
+        last_access_date_criteria = self.criteria.get_criteria_value('last_access_date')
 
         if asset_type_criteria == 'dir' and isinstance(asset, File):
             return False
@@ -53,6 +55,10 @@ class Search():
                 return False
             if create_date_criteria is not None and asset.created != create_date_criteria:
                 return False
+            if modify_date_criteria is not None and asset.modified != modify_date_criteria:
+                return False
+            if last_access_date_criteria is not None and asset.last_access != last_access_date_criteria:
+                return False
 
         if isinstance(asset, File) and (asset_type_criteria is None or asset_type_criteria == 'file'):
             if name_criteria is not None and name_criteria.lower() not in asset.name.lower():
@@ -62,6 +68,10 @@ class Search():
             if owner_criteria is not None and asset.owner != owner_criteria:
                  return False
             if create_date_criteria is not None and asset.created != create_date_criteria:
+                return False
+            if modify_date_criteria is not None and asset.modified != modify_date_criteria:
+                return False
+            if last_access_date_criteria is not None and asset.last_access != last_access_date_criteria:
                 return False
             if size_criteria is not None and size_less_than_criteria == True and asset.size > size_criteria:
                 return False
@@ -76,7 +86,7 @@ class Search():
                 :return:
                 """
         last_result = BeautifulTable()
-        last_result.column_headers = ["path", "size",  "Owner", "Asset Type", "Create Date"]
+        last_result.column_headers = ["Path", "Size",  "Owner", "Asset Type", "Create Date", "Modified Date", "Last Access Date"]
         logger.info("search_files_and_directories : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             asset_type_criteria = self.criteria.get_criteria_value('asset_type')
@@ -86,9 +96,7 @@ class Search():
                     if self.satisfies_criteria(directory):
                         size_kb = "{0:.2f}".format(directory.get_size() / 1024)
                         size_print =  str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )"
-                        last_result.append_row([directory.get_path(), size_print,  "", "Directory",directory.get_created_date()])
-
-
+                        last_result.append_row([directory.get_path(), size_print, "", "Directory", directory.get_created_date(), directory.get_modified_date(), directory.get_last_access()])
 
             if asset_type_criteria == None or asset_type_criteria == 'file':
                 for file in files:
@@ -100,7 +108,7 @@ class Search():
 
                         size_kb = "{0:.2f}".format(file.get_size() / 1024)
                         size_print = str(size_kb) + " KB (" + str(file.get_size()) + " bytes )"
-                        last_result.append_row([file.get_path(), size_print, file.get_owner(), "File", file.get_created_date()])
+                        last_result.append_row([file.get_path(), size_print, file.get_owner(), "File", file.get_created_date(), file.get_modified_date(), file.get_last_access()])
 
         print(last_result)
         logger.info("search_files_and_directories : Exit")
