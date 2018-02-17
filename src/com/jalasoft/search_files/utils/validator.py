@@ -1,4 +1,5 @@
 import datetime
+import os
 
 def is_number(value):
     """
@@ -51,3 +52,8 @@ def is_in_range(value, down_limit, up_limit):
     else:
         raise ValueError ("One or more arguments is not an integer.")
 
+def is_valid_path(value):
+    if not os.path.isdir(value):
+        return False
+    else:
+        return True
