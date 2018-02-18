@@ -1,19 +1,23 @@
 from src.com.jalasoft.search_files.utils.logging_config import logger
-class SearchCriteria(object):
-    def __init__(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None, modify_date=None, last_access_date=None):
+from src.com.jalasoft.search_files.utils.validator import *
 
-        """ **kwargs
-        This is the constructor of the SearchCriteria class.
-        Where size_range is a tuple (from_size, to_size)
-        Where create_date_range is a tuple (from_date, to_date)
-        Where asset_type is 'file' or 'dir'
-        Where size_unit is either 'B', 'KB', 'MB', 'GB'
-        :param str path:
-        :param str name:
-        :param str extension:
-        :param int size:
-        :param str owner:
+class SearchCriteria(object):
+
+    def __init__(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None, modify_date=None, last_access_date=None):
         """
+        :param path: str This is the path where the searching is going to start. None is not supported
+        :param name: str    This is the name of the file to be searched.
+        :param extension: str  The extension of the file to be searched
+        :param asset_type: str   The values accepted for this are file or dir
+        :param size: int     The size in KB to be searched for
+        :param size_less_than: bool  If False, files and directories greater than the size will be searched
+        :param owner: str    The owner of the file
+        :param create_date: datetime The creation date of the file
+        :param modify_date: datetime The modification time of the file
+        :param last_access_date: datetime. The last access date of the file
+        """
+        if not is_valid_path(path):
+            raise AttributeError('Invalid attribute path')
         self.criteria = {
                         'path': path,
                         'name': name,
