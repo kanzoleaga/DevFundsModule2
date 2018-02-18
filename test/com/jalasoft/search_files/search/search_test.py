@@ -1,4 +1,5 @@
 import unittest
+import definition
 from src.com.jalasoft.search_files.search.search import *
 
 class SearchTest(unittest.TestCase):
@@ -39,8 +40,19 @@ class SearchTest(unittest.TestCase):
         Regardless the value of size_less_than == false, the result will be true if the size is equal
         :return:
         """
+        test_data_path = definition.ROOT_DIR+'\\test\\com\\jalasoft\\search_files\\utils\\test_data'
+        file = File(test_data_path + '\\test_size_8kb.txt', 'test_size_8kb.txt')
+        file.set_size()
+        search = Search()
+        search.set_advanced_search_criteria(test_data_path, size=7508, size_less_than=True)
+        self.assertTrue(search.satisfies_criteria(file))
+        search.set_advanced_search_criteria(test_data_path, size=7508, size_less_than=False)
+        self.assertTrue(search.satisfies_criteria(file))
+
+    def test_satisfies_criteria_returns_false_if_at_least_one_criteria_is_not_satisfied(self):
         pass
 
-
+    def test_satisfies_criteria_returns_true_just_when_all_criteria_is_satisfied(self):
+        pass
 
 
