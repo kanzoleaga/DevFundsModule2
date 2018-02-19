@@ -5,7 +5,7 @@ class SearchCriteria(object):
 
 
     def __init__(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None,
-                 owner=None, create_date=None, modify_date=None, last_access_date=None):
+                 owner=None, create_date=None, modify_date=None, last_access_date=None, content=None):
 
         """
         :param path: str This is the path where the searching is going to start. None is not supported
