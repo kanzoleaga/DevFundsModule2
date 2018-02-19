@@ -21,8 +21,8 @@ class Search():
     def set_basic_search_criteria(self, path, name=None, extension=None, asset_type=None):
         self.criteria = SearchCriteria(path, name, extension, asset_type)
 
-    def set_advanced_search_criteria(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None, modify_date=None, last_access_date=None):
-        self.criteria = SearchCriteria(path, name, extension, asset_type, size, size_less_than, owner, create_date, modify_date, last_access_date)
+    def set_advanced_search_criteria(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None, modify_date=None, last_access_date=None, content=None):
+        self.criteria = SearchCriteria(path, name, extension, asset_type, size, size_less_than, owner, create_date, modify_date, last_access_date, content)
 
     def satisfies_criteria(self, asset):
         name_criteria = self.criteria.get_criteria_value('name')
@@ -34,12 +34,15 @@ class Search():
         create_date_criteria = self.criteria.get_criteria_value('create_date')
         modify_date_criteria = self.criteria.get_criteria_value('modify_date')
         last_access_date_criteria = self.criteria.get_criteria_value('last_access_date')
+        content = self.criteria.get_criteria_value('content')
 
         if asset_type_criteria == 'dir' and isinstance(asset, File):
             return False
         if asset_type_criteria == 'file' and isinstance(asset, Directory):
             return False
         if isinstance(asset, Directory) and (asset_type_criteria is None or asset_type_criteria == 'dir'):
+            if content is not None:
+                return False
             if name_criteria is not None and name_criteria.lower() not in asset.name.lower():
                 return False
             size_less_than_criteria = self.criteria.get_criteria_value('size_less_than')
@@ -71,6 +74,8 @@ class Search():
                 return False
             if size_criteria is not None and size_less_than_criteria == False and asset.size < size_criteria:
                 return False
+            if content is not None:
+                return asset.search_by_content(content)
         return True
 
     def search_any_criteria(self):

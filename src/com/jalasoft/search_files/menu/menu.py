@@ -126,8 +126,12 @@ class Menu():
             while not is_date_time(last_access_date):
                 last_access_date = input("Enter a valid last access date (empty for any date) >> ")
 
+        content = input("Enter content to search (empty for all) >>  ")
+        if str(content) == '':
+            content = None
+
         search = Search()
-        search.set_advanced_search_criteria(path, name, extension, asset_type, size, size_less_than, owner, create_date, modify_date, last_access_date)
+        search.set_advanced_search_criteria(path, name, extension, asset_type, size, size_less_than, owner, create_date, modify_date, last_access_date, content)
         search.search_any_criteria()
         Menu.main_menu(self)
 

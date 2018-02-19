@@ -3,7 +3,7 @@ from src.com.jalasoft.search_files.utils.validator import *
 
 class SearchCriteria(object):
 
-    def __init__(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None, modify_date=None, last_access_date=None):
+    def __init__(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None, modify_date=None, last_access_date=None, content=None):
         """
         :param path: str This is the path where the searching is going to start. None is not supported
         :param name: str    This is the name of the file to be searched.
@@ -15,6 +15,7 @@ class SearchCriteria(object):
         :param create_date: datetime The creation date of the file
         :param modify_date: datetime The modification time of the file
         :param last_access_date: datetime. The last access date of the file
+        :param content: str. The content to search in file
         """
         if not is_valid_path(path):
             raise AttributeError('Invalid attribute path')
@@ -28,7 +29,8 @@ class SearchCriteria(object):
                         'owner': owner,
                         'create_date': create_date,
                         'modify_date': modify_date,
-                        'last_access_date': last_access_date
+                        'last_access_date': last_access_date,
+                        'content': content
         }
 
     def get_criteria_value(self, key):
