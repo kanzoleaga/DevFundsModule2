@@ -21,11 +21,8 @@ class Search():
     def set_basic_search_criteria(self, path, name=None, extension=None, asset_type=None):
         self.criteria = SearchCriteria(path, name, extension, asset_type)
 
-    def set_advanced_search_criteria(self, path, name=None, extension=None, asset_type=None, size=None,
-                                     size_less_than=None, owner=None, create_date=None, modify_date=None,
-                                     last_access_date=None):
-        self.criteria = SearchCriteria(path, name, extension, asset_type, size, size_less_than, owner,
-                                       create_date, modify_date, last_access_date)
+    def set_advanced_search_criteria(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None, modify_date=None, last_access_date=None, content=None):
+        self.criteria = SearchCriteria(path, name, extension, asset_type, size, size_less_than, owner, create_date, modify_date, last_access_date, content)
 
     def satisfies_criteria(self, asset):
         name_criteria = self.criteria.get_criteria_value('name')
@@ -37,12 +34,15 @@ class Search():
         create_date_criteria = self.criteria.get_criteria_value('create_date')
         modify_date_criteria = self.criteria.get_criteria_value('modify_date')
         last_access_date_criteria = self.criteria.get_criteria_value('last_access_date')
+        content = self.criteria.get_criteria_value('content')
 
         if asset_type_criteria == 'dir' and isinstance(asset, File):
             return False
         if asset_type_criteria == 'file' and isinstance(asset, Directory):
             return False
         if isinstance(asset, Directory) and (asset_type_criteria is None or asset_type_criteria == 'dir'):
+            if content is not None:
+                return False
             if name_criteria is not None and name_criteria.lower() not in asset.name.lower():
                 return False
             size_less_than_criteria = self.criteria.get_criteria_value('size_less_than')
@@ -62,7 +62,7 @@ class Search():
                 return False
             if extension_criteria is not None and asset.extension.lower() != extension_criteria.lower():
                 return False
-            if owner_criteria is not None and asset.owner != owner_criteria:
+            if owner_criteria is not None and asset.get_owner() != owner_criteria:
                  return False
             if create_date_criteria is not None and asset.created != create_date_criteria:
                 return False
@@ -74,12 +74,15 @@ class Search():
                 return False
             if size_criteria is not None and size_less_than_criteria == False and asset.size < size_criteria:
                 return False
+            if content is not None:
+                return asset.search_by_content(content)
         return True
 
     def search_any_criteria(self):
         """
                 :return:
                 """
+
         last_result = BeautifulTable(220)
         last_result.column_headers = ["Path", "Size",  "Owner", "Asset Type", "Create Date", "Modified Date",
                                       "Last Access Date"]
@@ -98,19 +101,26 @@ class Search():
                                                 directory.get_created_date(), directory.get_modified_date(),
                                                 directory.get_last_access()])
 
-            if asset_type_criteria == None or asset_type_criteria == 'file':
-                for file in files:
-                    file = File(os.path.join(root, file), file)
-                    # Setting file create_date only if this criteria is enabled for the search
-                    # if create_date_criteria is not None:
-                    #     file.set_create_date()
-                    if self.satisfies_criteria(file):
 
+            if asset_type_criteria == None or asset_type_criteria == 'file':
+                for file_name in files:
+                    file = File(os.path.join(root, file_name), file_name)
+                    if self.criteria.get_criteria_value('path') == "c:\\":
+                        file.owner = ""
+                    else:
+                        file.set_owner()
+
+                    if self.satisfies_criteria(file):
                         size_kb = "{0:.2f}".format(file.get_size() / 1024)
                         size_print = str(size_kb) + " KB (" + str(file.get_size()) + " bytes )"
-                        last_result.append_row([file.get_path(), size_print, file.get_owner(), "File",
-                                                file.get_created_date(), file.get_modified_date(),
-                                                file.get_last_access()])
+                        last_result.append_row([file.get_path(), size_print, file.get_owner(), "File", file.get_created_date(), file.get_modified_date(), file.get_last_access()])
+            if asset_type_criteria == None or asset_type_criteria == 'dir':
+                for name in directories:
+                    directory = Directory(os.path.join(root, name), name)
+                    if self.satisfies_criteria(directory):
+                        size_kb = "{0:.2f}".format(directory.get_size() / 1024)
+                        size_print = str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )"
+                        last_result.append_row([directory.get_path(), size_print, "", "Directory", directory.get_created_date(), directory.get_modified_date(), directory.get_last_access()])
 
         print(last_result)
         logger.info("search_files_and_directories : Exit")

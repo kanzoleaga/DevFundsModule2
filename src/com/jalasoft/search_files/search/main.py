@@ -1,11 +1,10 @@
-from src.com.jalasoft.search_files.menu.menu import *
+from src.com.jalasoft.search_files.menu.menu import Menu
 
 # =======================
 #      MAIN PROGRAM
 # =======================
 
 # Main class
-
 def main():
     try:
         # Launch main menu
@@ -14,7 +13,6 @@ def main():
     except:
         return 1
 
-
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
 
