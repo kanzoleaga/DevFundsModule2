@@ -68,3 +68,4 @@ class Validator(object):
 
     def is_bool(self, value):
         return isinstance(value, bool)
+

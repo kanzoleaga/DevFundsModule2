@@ -80,9 +80,11 @@ class Search():
         """
                 :return:
                 """
-        last_result = BeautifulTable()
+        last_result = BeautifulTable(220)
         last_result.column_headers = ["Path", "Size",  "Owner", "Asset Type", "Create Date", "Modified Date",
                                       "Last Access Date"]
+        last_result.width_exceed_policy = last_result.WEP_WRAP
+        last_result.default_alignment.ALIGN_LEFT
         logger.info("search_files_and_directories : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             asset_type_criteria = self.criteria.get_criteria_value('asset_type')
