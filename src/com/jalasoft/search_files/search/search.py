@@ -59,7 +59,7 @@ class Search():
                 return False
             if extension_criteria is not None and asset.extension.lower() != extension_criteria.lower():
                 return False
-            if owner_criteria is not None and asset.owner != owner_criteria:
+            if owner_criteria is not None and asset.get_owner() != owner_criteria:
                  return False
             if create_date_criteria is not None and asset.created != create_date_criteria:
                 return False
@@ -78,29 +78,28 @@ class Search():
                 :return:
                 """
         last_result = BeautifulTable()
-        last_result.column_headers = ["Path", "Size",  "Owner", "Asset Type", "Create Date", "Modified Date", "Last Access Date"]
+        last_result.column_headers = ["Path", "Size", "Owner", "Asset Type", "Create Date", "Modified Date","Last Access Date"]
         logger.info("search_files_and_directories : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             asset_type_criteria = self.criteria.get_criteria_value('asset_type')
-            if asset_type_criteria == None or asset_type_criteria == 'dir':
-                for dir in directories:
-                    directory = Directory(os.path.join(root, dir), dir)
-                    if self.satisfies_criteria(directory):
-                        size_kb = "{0:.2f}".format(directory.get_size() / 1024)
-                        size_print =  str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )"
-                        last_result.append_row([directory.get_path(), size_print, "", "Directory", directory.get_created_date(), directory.get_modified_date(), directory.get_last_access()])
-
             if asset_type_criteria == None or asset_type_criteria == 'file':
-                for file in files:
-                    file = File(os.path.join(root, file), file)
-                    # Setting file create_date only if this criteria is enabled for the search
-                    # if create_date_criteria is not None:
-                    #     file.set_create_date()
-                    if self.satisfies_criteria(file):
+                for file_name in files:
+                    file = File(os.path.join(root, file_name), file_name)
+                    if self.criteria.get_criteria_value('path') == "c:\\":
+                        file.owner = ""
+                    else:
+                        file.set_owner()
 
+                    if self.satisfies_criteria(file):
                         size_kb = "{0:.2f}".format(file.get_size() / 1024)
                         size_print = str(size_kb) + " KB (" + str(file.get_size()) + " bytes )"
                         last_result.append_row([file.get_path(), size_print, file.get_owner(), "File", file.get_created_date(), file.get_modified_date(), file.get_last_access()])
-
+            if asset_type_criteria == None or asset_type_criteria == 'dir':
+                for name in directories:
+                    directory = Directory(os.path.join(root, name), name)
+                    if self.satisfies_criteria(directory):
+                        size_kb = "{0:.2f}".format(directory.get_size() / 1024)
+                        size_print = str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )"
+                        last_result.append_row([directory.get_path(), size_print, "", "Directory", directory.get_created_date(), directory.get_modified_date(), directory.get_last_access()])
         print(last_result)
         logger.info("search_files_and_directories : Exit")
