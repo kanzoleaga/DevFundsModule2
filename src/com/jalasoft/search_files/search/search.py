@@ -91,17 +91,6 @@ class Search():
         logger.info("search_files_and_directories : Enter")
         for root, directories, files in os.walk(self.criteria.get_criteria_value('path')):
             asset_type_criteria = self.criteria.get_criteria_value('asset_type')
-            if asset_type_criteria == None or asset_type_criteria == 'dir':
-                for dir in directories:
-                    directory = Directory(os.path.join(root, dir), dir)
-                    if self.satisfies_criteria(directory):
-                        size_kb = "{0:.2f}".format(directory.get_size() / 1024)
-                        size_print =  str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )"
-                        last_result.append_row([directory.get_path(), size_print, "", "Directory",
-                                                directory.get_created_date(), directory.get_modified_date(),
-                                                directory.get_last_access()])
-
-
             if asset_type_criteria == None or asset_type_criteria == 'file':
                 for file_name in files:
                     file = File(os.path.join(root, file_name), file_name)
@@ -113,14 +102,19 @@ class Search():
                     if self.satisfies_criteria(file):
                         size_kb = "{0:.2f}".format(file.get_size() / 1024)
                         size_print = str(size_kb) + " KB (" + str(file.get_size()) + " bytes )"
-                        last_result.append_row([file.get_path(), size_print, file.get_owner(), "File", file.get_created_date(), file.get_modified_date(), file.get_last_access()])
+                        last_result.append_row([file.get_path(), size_print, file.get_owner(), "File",
+                                                file.get_created_date(), file.get_modified_date(),
+                                                file.get_last_access()])
+
             if asset_type_criteria == None or asset_type_criteria == 'dir':
                 for name in directories:
                     directory = Directory(os.path.join(root, name), name)
                     if self.satisfies_criteria(directory):
                         size_kb = "{0:.2f}".format(directory.get_size() / 1024)
                         size_print = str(size_kb) + " KB (" + str(directory.get_size()) + " bytes )"
-                        last_result.append_row([directory.get_path(), size_print, "", "Directory", directory.get_created_date(), directory.get_modified_date(), directory.get_last_access()])
+                        last_result.append_row([directory.get_path(), size_print, "", "Directory",
+                                                directory.get_created_date(), directory.get_modified_date(),
+                                                directory.get_last_access()])
 
         print(last_result)
         logger.info("search_files_and_directories : Exit")
