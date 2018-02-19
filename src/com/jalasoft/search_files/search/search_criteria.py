@@ -3,7 +3,10 @@ from src.com.jalasoft.search_files.utils.validator import *
 
 class SearchCriteria(object):
 
-    def __init__(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None, owner=None, create_date=None, modify_date=None, last_access_date=None, content=None):
+
+    def __init__(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None,
+                 owner=None, create_date=None, modify_date=None, last_access_date=None):
+
         """
         :param path: str This is the path where the searching is going to start. None is not supported
         :param name: str    This is the name of the file to be searched.
@@ -17,21 +20,36 @@ class SearchCriteria(object):
         :param last_access_date: datetime. The last access date of the file
         :param content: str. The content to search in file
         """
-        if not is_valid_path(path):
+        validator = Validator()
+        if not validator.is_valid_path(path):
             raise AttributeError('Invalid attribute path')
-        self.criteria = {
-                        'path': path,
-                        'name': name,
-                        'extension': extension,
-                        'asset_type': asset_type,
-                        'size': size,
-                        'size_less_than': size_less_than,
-                        'owner': owner,
-                        'create_date': create_date,
-                        'modify_date': modify_date,
-                        'last_access_date': last_access_date,
-                        'content': content
+        if asset_type is not None and not validator.is_valid_asset(asset_type):
+            raise AttributeError('Invalid attribute asset_type')
+        if size is not None and not validator.is_positive(size):
+            raise AttributeError('Invalid attribute size')
+        if size_less_than is not None and not validator.is_bool(size_less_than):
+            raise AttributeError('Invalid attribute size_less_than')
+        if create_date is not None and not validator.is_date_time(create_date):
+            raise AttributeError('Invalid attribute create_date')
+        if modify_date is not None and not validator.is_date_time(modify_date):
+            raise AttributeError('Invalid attribute modify_date')
+        if last_access_date is not None and not validator.is_date_time(last_access_date):
+            raise AttributeError('Invalid attribute last_access_date')
+        else:
+          self.criteria = {
+                          'path': path,
+                          'name': name,
+                          'extension': extension,
+                          'asset_type': asset_type,
+                          'size': size,
+                          'size_less_than': size_less_than,
+                          'owner': owner,
+                          'create_date': create_date,
+                          'modify_date': modify_date,
+                          'last_access_date': last_access_date,
+                          'content': content
         }
+
 
     def get_criteria_value(self, key):
         """

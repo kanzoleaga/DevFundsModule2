@@ -7,6 +7,7 @@ class Menu():
     def __init__(self):
         # Define dictionaries for menus - constants
         self.menu_actions = {}
+        self.validator = Validator()
 
     # =======================
     #     MENU FUNCTIONS
@@ -40,7 +41,7 @@ class Menu():
     # Main menu Actions:
     def basic_search(self):
         path = str(input("Enter the path >>  "))
-        while not os.path.isdir(path):
+        while not self.validator.is_valid_path(path):
             path = input("Invalid path. Please enter a valid path >>  ")
         name = input("Enter the name of the file (empty to search all files and directories) >>  ")
         if str(name) == '':
@@ -58,7 +59,6 @@ class Menu():
         search = Search()
         search.set_basic_search_criteria(path, name, extension, asset_type)
         search.search_any_criteria()
-        print(search.result)
         Menu.main_menu(self)
 
     def advanced_search(self):
