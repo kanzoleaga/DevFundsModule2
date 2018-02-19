@@ -8,7 +8,7 @@ class SearchCriteriaTest(unittest.TestCase):
             SearchCriteria.__init__(self,'C:\MyPython@#$#%dfhghR\sdfadTEST')
         self.assertTrue('Invalid attribute path' in str(context.exception))
 
-    def test_search_criteria_constructor_raises_an_exception_for_not_numberic_size(self):
+    def test_search_criteria_constructor_raises_an_exception_for_not_numeric_size(self):
         pass
 
     def test_search_criteria_constructor_raises_an_exception_for_invalid_create_date(self):
@@ -32,6 +32,6 @@ class SearchCriteriaTest(unittest.TestCase):
         :return:
         """
         pass
-    
+
 if __name__ == '__main__':
     unittest.main()
