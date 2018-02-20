@@ -89,8 +89,11 @@ class Menu():
             size = None
             size_less_than = None
         if size is not None:
-            while not self.validator.is_number(size):
+            while not self.validator.is_number(size) and size is not None:
                 size = input("Enter a valid number for size less than (empty for any size) >> ")
+                if str(size) == '':
+                    size = None
+                    size_less_than = None
         # Ask for greater than only if less than was not entered:
         if size is None:
             size = input("Size greater than KB (empty for any size) >>  ")
@@ -98,9 +101,12 @@ class Menu():
             if str(size) == '':
                 size = None
                 size_less_than = None
-                if size is not None:
-                    while not self.validator.is_number(size):
-                        size = input("Enter a valid number for size greater than (empty for any size) >> ")
+            if size is not None:
+                while not self.validator.is_number(size) and size is not None:
+                    size = input("Enter a valid number for size greater than (empty for any size) >> ")
+                    if str(size) == '':
+                        size = None
+                        size_less_than = None
         # Changing unit type to KB
         if size is not None:
             size = int(size)*1024
@@ -108,23 +114,27 @@ class Menu():
         create_date = input("Enter the creation date of the file (YYYY-MM-DD hh:mm) (empty for any) >>  ")
         if str(create_date) == '':
             create_date = None
-        else:
-            while not self.validator.is_date_time(create_date):
-                size = input("Enter a valid creation date (empty for any date) >> ")
+        while not self.validator.is_date_time(create_date) and create_date is not None:
+            create_date = input("Enter a valid creation date (empty for any date) >> ")
+            if str(create_date) == '':
+                create_date = None
 
         modify_date = input("Enter the modified date of the file (YYYY-MM-DD hh:mm) (empty for any) >>  ")
         if str(modify_date) == '':
             modify_date = None
-        else:
-            while not self.validator.is_date_time(modify_date):
-                modify_date = input("Enter a valid modify date (empty for any date) >> ")
+        while not self.validator.is_date_time(modify_date) and modify_date is not None:
+            modify_date = input("Enter a valid modify date (empty for any date) >> ")
+            if str(modify_date) == '':
+                modify_date = None
 
         last_access_date = input("Enter the last access date of the file (YYYY-MM-DD hh:mm) (empty for any) >>  ")
         if str(last_access_date) == '':
             last_access_date = None
         else:
-            while not self.validator.is_date_time(last_access_date):
+            while not self.validator.is_date_time(last_access_date) and last_access_date is not None:
                 last_access_date = input("Enter a valid last access date (empty for any date) >> ")
+                if str(last_access_date) == '':
+                    last_access_date = None
 
         content = input("Enter content to search (empty for all) >>  ")
         if str(content) == '':
