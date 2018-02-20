@@ -110,46 +110,97 @@ class Menu():
                 size = None
                 size_less_than = None
             if size is not None:
+
                 while not self.validator.is_number(size) and size is not None:
                     size = input("Enter a valid number for size greater than (empty for any size) >> ")
                     if str(size) == '':
                         size = None
                         size_less_than = None
+
         # Changing unit type to KB
         if size is not None:
             size = int(size)*1024
 
-        create_date = input("Enter the creation date of the file (YYYY-MM-DD hh:mm) (empty for any) >>  ")
+        create_date = input("Enter the created date less than or equal of the asset (YYYY-MM-DD) (empty for any) >>  ")
+        create_date_less_than = True
         if str(create_date) == '':
             create_date = None
-        while not self.validator.is_date_time(create_date) and create_date is not None:
-            create_date = input("Enter a valid creation date (empty for any date) >> ")
+
+            create_date_less_than = None
+        if create_date is not None:
+            #while not self.validator.is_date_time(create_date):
+                #create_date = input("Enter a valid created date less than or equal (empty for any date) >> ")
+            while not self.validator.is_date_time(create_date) and create_date is not None:
+                create_date = input("Enter a valid created date less than or equal (empty for any date) >> ")
+                if str(create_date) == '':
+                    create_date = None
+        # Ask for less than only if created date was not entered:
+        if create_date is None:
+            create_date = input("Enter the created date greater of the asset (YYYY-MM-DD) (empty for any) >>  ")
+            create_date_less_than = False
             if str(create_date) == '':
                 create_date = None
+                create_date_less_than = None
+            if create_date is not None:
+                #while not self.validator.is_date_time(create_date):
+                    #create_date = input("Enter a valid created date greater than of the asset (empty for any date) >> ")
+                while not self.validator.is_date_time(create_date) and create_date is not None:
+                    create_date = input("Enter a valid created date greater than or equal (empty for any date) >> ")
+                    if str(create_date) == '':
+                        create_date = None
 
-        modify_date = input("Enter the modified date of the file (YYYY-MM-DD hh:mm) (empty for any) >>  ")
-        if str(modify_date) == '':
-            modify_date = None
-        while not self.validator.is_date_time(modify_date) and modify_date is not None:
-            modify_date = input("Enter a valid modify date (empty for any date) >> ")
+        modify_date = None
+        modify_date_less_than = True
+        if create_date is None:
+            modify_date = input("Enter the modify date less than or equal of the file (YYYY-MM-DD) (empty for any) >>  ")
             if str(modify_date) == '':
                 modify_date = None
+                modify_date_less_than = None
+            if modify_date is not None:
+                #while not self.validator.is_date_time(modify_date):
+                    #modify_date = input("Enter a valid modify date less than or equal (empty for any date) >> ")
+                while not self.validator.is_date_time(modify_date) and modify_date is not None:
+                    modify_date = input("Enter a valid modify date less than or equal (empty for any date) >> ")
+                    if str(modify_date) == '':
+                        modify_date = None
 
-        last_access_date = input("Enter the last access date of the file (YYYY-MM-DD hh:mm) (empty for any) >>  ")
-        if str(last_access_date) == '':
-            last_access_date = None
-        else:
-            while not self.validator.is_date_time(last_access_date) and last_access_date is not None:
-                last_access_date = input("Enter a valid last access date (empty for any date) >> ")
-                if str(last_access_date) == '':
-                    last_access_date = None
+            # Ask for less than only if created date was not entered:
+            if modify_date is None:
+                modify_date = input("Enter the modify date greater than of the file (YYYY-MM-DD) (empty for any) >>  ")
+                modify_date_less_than = False
+                if str(modify_date) == '':
+                    modify_date = None
+                    modify_date_less_than = None
+                if modify_date is not None:
+                    #while not self.validator.is_date_time(modify_date):
+                        #modify_date = input(
+                            #"Enter a valid modify date greater than of the file (empty for any date) >> ")
+                    while not self.validator.is_date_time(modify_date) and modify_date is not None:
+                        modify_date = input("Enter a valid modify date greater than of the file (empty for any date) >> ")
+                        if str(modify_date) == '':
+                            modify_date = None
+
+        last_access_date = None
+        last_access_date_less_than = None
+        if create_date is None and modify_date is None:
+            last_access_date = input("Enter the last access date of the file (YYYY-MM-DD hh:mm) (empty for any) >>  ")
+            if str(last_access_date) == '':
+                last_access_date = None
+            else:
+                #while not self.validator.is_date_time(last_access_date):
+                    #last_access_date = input("Enter a valid last access date (empty for any date) >> ")
+                while not self.validator.is_date_time(last_access_date) and last_access_date is not None:
+                    last_access_date = input("Enter a valid last access date (empty for any date) >> ")
+                    if str(last_access_date) == '':
+                        last_access_date = None
+
 
         content = input("Enter content to search (empty for all) >>  ")
         if str(content) == '':
             content = None
 
         search = Search()
-        search.set_advanced_search_criteria(path, name, extension, asset_type, size, size_less_than, owner, create_date, modify_date, last_access_date, content)
+        search.set_advanced_search_criteria(path, name, extension, asset_type, size, size_less_than, owner, create_date, create_date_less_than, modify_date, modify_date_less_than, last_access_date, content)
         search.search_any_criteria()
         Menu.main_menu(self)
 
