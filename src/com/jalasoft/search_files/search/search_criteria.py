@@ -1,4 +1,3 @@
-from src.com.jalasoft.search_files.utils.logging_config import logger
 from src.com.jalasoft.search_files.utils.validator import *
 
 class SearchCriteria(object):
@@ -20,20 +19,20 @@ class SearchCriteria(object):
         :param last_access_date: datetime. The last access date of the file
         :param content: str. The content to search in file
         """
-        validator = Validator()
-        if not validator.is_valid_path(path):
+        self.validator = Validator()
+        if not self.validator.is_valid_path(path):
             raise AttributeError('Invalid attribute path')
-        if asset_type is not None and not validator.is_valid_asset(asset_type):
+        if asset_type is not None and not self.validator.is_valid_asset(asset_type):
             raise AttributeError('Invalid attribute asset_type')
-        if size is not None and not validator.is_positive(size):
+        if size is not None and not self.validator.is_positive(size):
             raise AttributeError('Invalid attribute size')
-        if size_less_than is not None and not validator.is_bool(size_less_than):
+        if size_less_than is not None and not self.validator.is_bool(size_less_than):
             raise AttributeError('Invalid attribute size_less_than')
-        if create_date is not None and not validator.is_date_time(create_date):
+        if create_date is not None and not self.validator.is_date_time(create_date):
             raise AttributeError('Invalid attribute create_date')
-        if modify_date is not None and not validator.is_date_time(modify_date):
+        if modify_date is not None and not self.validator.is_date_time(modify_date):
             raise AttributeError('Invalid attribute modify_date')
-        if last_access_date is not None and not validator.is_date_time(last_access_date):
+        if last_access_date is not None and not self.validator.is_date_time(last_access_date):
             raise AttributeError('Invalid attribute last_access_date')
         else:
           self.criteria = {

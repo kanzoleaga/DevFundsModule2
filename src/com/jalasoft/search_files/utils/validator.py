@@ -1,5 +1,6 @@
 import datetime
 import os
+from src.com.jalasoft.search_files.search.search_criteria import SearchCriteria
 
 class Validator(object):
 
@@ -68,4 +69,28 @@ class Validator(object):
 
     def is_bool(self, value):
         return isinstance(value, bool)
+
+    def is_valid_criteria(self, criteria):
+        if not isinstance(criteria, SearchCriteria):
+            return False
+        else:
+            if criteria.get_crieria.value('path') is None:
+                return False
+            if (criteria.get_crieria.value('extension') is not None) \
+                    and criteria.get_criteria_value('asset_type') == 'dir':
+                return False
+            if (criteria.get_crieria.value('owner') is not None) \
+                    and criteria.get_criteria_value('asset_type') == 'dir':
+                return False
+            if (criteria.get_crieria.value('content') is not None) \
+                    and criteria.get_criteria_value('asset_type') == 'dir':
+                return False
+        return True
+
+
+
+
+
+
+
 
