@@ -23,7 +23,7 @@ class Validator(object):
         :return: bool
         """
         try:
-            datetime.datetime.strptime(value, '%Y-%m-%d %H:%M')
+            datetime.datetime.strptime(value, '%Y-%m-%d')
             return True
         except:
             return False
