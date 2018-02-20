@@ -54,6 +54,10 @@ class Menu():
             asset_type = input("Enter the asset_type (dir/file/empty to search all files and directories) >>  ")
             if str(asset_type) == '':
                 asset_type = None
+            while not self.validator.is_valid_asset(asset_type) and asset_type is not None:
+                asset_type = input("Enter a valid asset_type (dir/file/empty to search all files and directories) >>  ")
+                if str(asset_type) == '':
+                    asset_type = None
         else:
             asset_type = 'file'
         search = Search()
@@ -80,6 +84,10 @@ class Menu():
             asset_type = input("Enter the asset_type (dir/file/empty for all) >>  ")
             if str(asset_type) == '':
                 asset_type = None
+            while not self.validator.is_valid_asset(asset_type) and asset_type is not None:
+                asset_type = input("Enter a valid asset_type (dir/file/empty to search all files and directories) >>  ")
+                if str(asset_type) == '':
+                    asset_type = None
         else:
             asset_type = 'file'
 
