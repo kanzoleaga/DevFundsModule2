@@ -24,7 +24,7 @@ class Validator(object):
         try:
             datetime.datetime.strptime(value, '%Y-%m-%d')
             return True
-        except ValueError:
+        except:
             return False
 
     def is_positive(self, value):

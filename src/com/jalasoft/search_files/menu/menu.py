@@ -54,6 +54,10 @@ class Menu():
             asset_type = input("Enter the asset_type (dir/file/empty to search all files and directories) >>  ")
             if str(asset_type) == '':
                 asset_type = None
+            while not self.validator.is_valid_asset(asset_type) and asset_type is not None:
+                asset_type = input("Enter a valid asset_type (dir/file/empty to search all files and directories) >>  ")
+                if str(asset_type) == '':
+                    asset_type = None
         else:
             asset_type = 'file'
         search = Search()
@@ -80,6 +84,10 @@ class Menu():
             asset_type = input("Enter the asset_type (dir/file/empty for all) >>  ")
             if str(asset_type) == '':
                 asset_type = None
+            while not self.validator.is_valid_asset(asset_type) and asset_type is not None:
+                asset_type = input("Enter a valid asset_type (dir/file/empty to search all files and directories) >>  ")
+                if str(asset_type) == '':
+                    asset_type = None
         else:
             asset_type = 'file'
 
@@ -89,8 +97,11 @@ class Menu():
             size = None
             size_less_than = None
         if size is not None:
-            while not self.validator.is_number(size):
+            while not self.validator.is_number(size) and size is not None:
                 size = input("Enter a valid number for size less than (empty for any size) >> ")
+                if str(size) == '':
+                    size = None
+                    size_less_than = None
         # Ask for greater than only if less than was not entered:
         if size is None:
             size = input("Size greater than KB (empty for any size) >>  ")
@@ -99,8 +110,13 @@ class Menu():
                 size = None
                 size_less_than = None
             if size is not None:
-                while not self.validator.is_number(size):
+
+                while not self.validator.is_number(size) and size is not None:
                     size = input("Enter a valid number for size greater than (empty for any size) >> ")
+                    if str(size) == '':
+                        size = None
+                        size_less_than = None
+
         # Changing unit type to KB
         if size is not None:
             size = int(size)*1024
@@ -109,10 +125,15 @@ class Menu():
         create_date_less_than = True
         if str(create_date) == '':
             create_date = None
+
             create_date_less_than = None
         if create_date is not None:
-            while not self.validator.is_date_time(create_date):
+            #while not self.validator.is_date_time(create_date):
+                #create_date = input("Enter a valid created date less than or equal (empty for any date) >> ")
+            while not self.validator.is_date_time(create_date) and create_date is not None:
                 create_date = input("Enter a valid created date less than or equal (empty for any date) >> ")
+                if str(create_date) == '':
+                    create_date = None
         # Ask for less than only if created date was not entered:
         if create_date is None:
             create_date = input("Enter the created date greater of the asset (YYYY-MM-DD) (empty for any) >>  ")
@@ -121,8 +142,12 @@ class Menu():
                 create_date = None
                 create_date_less_than = None
             if create_date is not None:
-                while not self.validator.is_date_time(create_date):
-                    create_date = input("Enter a valid created date greater than of the asset (empty for any date) >> ")
+                #while not self.validator.is_date_time(create_date):
+                    #create_date = input("Enter a valid created date greater than of the asset (empty for any date) >> ")
+                while not self.validator.is_date_time(create_date) and create_date is not None:
+                    create_date = input("Enter a valid created date greater than or equal (empty for any date) >> ")
+                    if str(create_date) == '':
+                        create_date = None
 
         modify_date = None
         modify_date_less_than = True
@@ -132,8 +157,12 @@ class Menu():
                 modify_date = None
                 modify_date_less_than = None
             if modify_date is not None:
-                while not self.validator.is_date_time(modify_date):
+                #while not self.validator.is_date_time(modify_date):
+                    #modify_date = input("Enter a valid modify date less than or equal (empty for any date) >> ")
+                while not self.validator.is_date_time(modify_date) and modify_date is not None:
                     modify_date = input("Enter a valid modify date less than or equal (empty for any date) >> ")
+                    if str(modify_date) == '':
+                        modify_date = None
 
             # Ask for less than only if created date was not entered:
             if modify_date is None:
@@ -143,9 +172,13 @@ class Menu():
                     modify_date = None
                     modify_date_less_than = None
                 if modify_date is not None:
-                    while not self.validator.is_date_time(modify_date):
-                        modify_date = input(
-                            "Enter a valid modify date greater than of the file (empty for any date) >> ")
+                    #while not self.validator.is_date_time(modify_date):
+                        #modify_date = input(
+                            #"Enter a valid modify date greater than of the file (empty for any date) >> ")
+                    while not self.validator.is_date_time(modify_date) and modify_date is not None:
+                        modify_date = input("Enter a valid modify date greater than of the file (empty for any date) >> ")
+                        if str(modify_date) == '':
+                            modify_date = None
 
         last_access_date = None
         last_access_date_less_than = None
@@ -154,8 +187,13 @@ class Menu():
             if str(last_access_date) == '':
                 last_access_date = None
             else:
-                while not self.validator.is_date_time(last_access_date):
+                #while not self.validator.is_date_time(last_access_date):
+                    #last_access_date = input("Enter a valid last access date (empty for any date) >> ")
+                while not self.validator.is_date_time(last_access_date) and last_access_date is not None:
                     last_access_date = input("Enter a valid last access date (empty for any date) >> ")
+                    if str(last_access_date) == '':
+                        last_access_date = None
+
 
         content = input("Enter content to search (empty for all) >>  ")
         if str(content) == '':
