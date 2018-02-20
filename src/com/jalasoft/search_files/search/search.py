@@ -43,7 +43,7 @@ class Search():
         if asset_type_criteria == 'file' and isinstance(asset, Directory):
             return False
         if isinstance(asset, Directory) and (asset_type_criteria is None or asset_type_criteria == 'dir'):
-            print(asset.path + " - " + asset.created)
+
             if content is not None:
                 return False
             if name_criteria is not None and name_criteria.lower() not in asset.name.lower():
@@ -64,7 +64,7 @@ class Search():
                 return False
 
         if isinstance(asset, File) and (asset_type_criteria is None or asset_type_criteria == 'file'):
-            print(asset.path + " - " + asset.created)
+
             if name_criteria is not None and name_criteria.lower() not in asset.name.lower():
                 return False
             if extension_criteria is not None and asset.extension.lower() != extension_criteria.lower():
@@ -75,19 +75,19 @@ class Search():
                 return False
             if size_criteria is not None and size_less_than_criteria is False and asset.size <= size_criteria:
                 return False
-            print("1")
+
             if create_date_criteria is not None and create_date_less_than_criteria is True and asset.created > create_date_criteria:
                 return False
-            print("2")
+
             if create_date_criteria is not None and create_date_less_than_criteria is False and asset.created <= create_date_criteria:
                 return False
-            print("3")
+
             if modify_date_criteria is not None and modify_date_less_than_criteria is True and asset.modified > modify_date_criteria:
                 return False
-            print("4")
+
             if modify_date_criteria is not None and modify_date_less_than_criteria is False and asset.modified <= modify_date_criteria:
                 return False
-            print("5")
+
             if last_access_date_criteria is not None and asset.last_access != last_access_date_criteria:
                 return False
             if content is not None:
