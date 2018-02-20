@@ -5,7 +5,8 @@ class SearchCriteria(object):
 
 
     def __init__(self, path, name=None, extension=None, asset_type=None, size=None, size_less_than=None,
-                 owner=None, create_date=None, modify_date=None, last_access_date=None, content=None):
+                 owner=None, create_date=None, create_date_less_than=None, modify_date=None, modify_date_less_than=None,
+                 last_access_date=None, content=None):
 
         """
         :param path: str This is the path where the searching is going to start. None is not supported
@@ -31,8 +32,12 @@ class SearchCriteria(object):
             raise AttributeError('Invalid attribute size_less_than')
         if create_date is not None and not validator.is_date_time(create_date):
             raise AttributeError('Invalid attribute create_date')
+        if create_date_less_than is not None and not validator.is_bool(create_date_less_than):
+            raise AttributeError('Invalid attribute create_date_less_than')
         if modify_date is not None and not validator.is_date_time(modify_date):
             raise AttributeError('Invalid attribute modify_date')
+        if modify_date_less_than is not None and not validator.is_bool(modify_date_less_than):
+            raise AttributeError('Invalid attribute modify_date_less_than')
         if last_access_date is not None and not validator.is_date_time(last_access_date):
             raise AttributeError('Invalid attribute last_access_date')
         else:
@@ -45,7 +50,9 @@ class SearchCriteria(object):
                           'size_less_than': size_less_than,
                           'owner': owner,
                           'create_date': create_date,
+                          'create_date_less_than': create_date_less_than,
                           'modify_date': modify_date,
+                          'modify_date_less_than': modify_date_less_than,
                           'last_access_date': last_access_date,
                           'content': content
         }
