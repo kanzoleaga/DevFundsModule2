@@ -137,6 +137,8 @@ class Search():
                                                 directory.get_created_date(),
                                                 directory.get_modified_date(),
                                                 directory.get_last_access()])
-
-        print(last_result)
+        if len(last_result) >= 1:
+            print(last_result)
+        else:
+            print('\n No results found for the specified criteria. \n')
         logger.info("search_files_and_directories : Exit")
