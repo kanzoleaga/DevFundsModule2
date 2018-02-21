@@ -1,4 +1,3 @@
-from src.com.jalasoft.search_files.utils.logging_config import logger
 from src.com.jalasoft.search_files.utils.validator import *
 
 class SearchCriteria(object):
@@ -70,4 +69,18 @@ class SearchCriteria(object):
             return self.criteria[key]
         else:
             raise ValueError('Invalid key. Key value' + key + 'is not a valid criteria')
+
+    def is_valid(self):
+        if self.get_crieria.value('path') is None:
+            return False
+        if (self.get_crieria.value('extension') is not None) \
+                and self.get_criteria_value('asset_type') == 'dir':
+            return False
+        if (self.get_crieria.value('owner') is not None) \
+                and self.get_criteria_value('asset_type') == 'dir':
+            return False
+        if (self.get_crieria.value('content') is not None) \
+                and self.get_criteria_value('asset_type') == 'dir':
+            return False
+        return True
 

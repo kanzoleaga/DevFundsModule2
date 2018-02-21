@@ -201,6 +201,7 @@ class Menu():
 
         search = Search()
         search.set_advanced_search_criteria(path, name, extension, asset_type, size, size_less_than, owner, create_date, create_date_less_than, modify_date, modify_date_less_than, last_access_date, content)
+        print (search.criteria.get_criteria_value('content'))
         search.search_any_criteria()
         Menu.main_menu(self)
 
