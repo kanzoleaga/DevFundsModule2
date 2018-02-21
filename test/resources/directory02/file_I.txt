@@ -1,0 +1,12 @@
+ines
+zambrana
+ TEMPLATE_CONTENT                                                                                                                                                                                                                                                                                                                                                                                                                         
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+ Thank you for your inquiry about the SoftLayer API.  All SoftLayer API support is currently offered under the SLDN (http://sldn.softlayer.com).  There you will find an SDK that can be downloaded, extensive documentation, examples and API related blogs.
+
+Please note that we are always open to suggestions or improvements you may be able to recommend.
+
+Thank you for your continued business with SoftLayer.
+
+Technical Support 
+
