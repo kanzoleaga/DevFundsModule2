@@ -1,6 +1,6 @@
 import unittest
-from src.com.jalasoft.search_files.utils.validator import Validator
-from src.com.jalasoft.search_files.search.search_criteria import SearchCriteria
+from src.com.jalasoft.search_files.utils.validator import *
+
 
 class ValidatorTest(unittest.TestCase):
     def test_is_number_is_true_for_cero(self):
@@ -46,17 +46,6 @@ class ValidatorTest(unittest.TestCase):
         validator = Validator()
         self.assertTrue(validator.is_date_time('2018-01-01 16:42'))
         self.assertFalse(validator.is_date_time('201801011642'))
-
-    def test_is_valid_criteria_returns_false_when_extension_or_owner_are_set_and_asset_type_is_dir(self):
-        validator = Validator()
-        path = "c:\\"
-        criteria = SearchCriteria(path,'name', '.py', 'dir')
-        self.assertFalse(validator.is_valid_criteria())
-        criteria = SearchCriteria(path, 'name', owner='Administrators', asset_type='dir' )
-        self.assertFalse(validator.is_valid_criteria())
-        criteria = SearchCriteria(path, 'name', content='A tesxt', asset_type='dir')
-        self.assertFalse(validator.is_valid_criteria())
-
 
 if __name__ == "__main__":
     unittest.main()

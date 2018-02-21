@@ -1,5 +1,5 @@
 import unittest
-from src.com.jalasoft.search_files.search.search_criteria import *
+from src.com.jalasoft.search_files.utils.validator import *
 
 class SearchCriteriaTest(unittest.TestCase):
 
@@ -31,6 +31,8 @@ class SearchCriteriaTest(unittest.TestCase):
         size_less_than must be boolean
         :return:
         """
+        pass
+    def test_search_criteria_is_valid_returns_false_if_owner_or_extension_are_set_and_asset_is_dir(self):
         pass
 
 if __name__ == '__main__':

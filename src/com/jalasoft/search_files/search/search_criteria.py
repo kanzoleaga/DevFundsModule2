@@ -20,16 +20,16 @@ class SearchCriteria(object):
         :param last_access_date: datetime. The last access date of the file
         :param content: str. The content to search in file
         """
-        self.validator = Validator()
-        if not self.validator.is_valid_path(path):
+        validator = Validator()
+        if not validator.is_valid_path(path):
             raise AttributeError('Invalid attribute path')
-        if asset_type is not None and not self.validator.is_valid_asset(asset_type):
+        if asset_type is not None and not validator.is_valid_asset(asset_type):
             raise AttributeError('Invalid attribute asset_type')
-        if size is not None and not self.validator.is_positive(size):
+        if size is not None and not validator.is_positive(size):
             raise AttributeError('Invalid attribute size')
-        if size_less_than is not None and not self.validator.is_bool(size_less_than):
+        if size_less_than is not None and not validator.is_bool(size_less_than):
             raise AttributeError('Invalid attribute size_less_than')
-        if create_date is not None and not self.validator.is_date_time(create_date):
+        if create_date is not None and not validator.is_date_time(create_date):
             raise AttributeError('Invalid attribute create_date')
         if create_date_less_than is not None and not validator.is_bool(create_date_less_than):
             raise AttributeError('Invalid attribute create_date_less_than')
@@ -69,4 +69,18 @@ class SearchCriteria(object):
             return self.criteria[key]
         else:
             raise ValueError('Invalid key. Key value' + key + 'is not a valid criteria')
+
+    def is_valid(self):
+        if self.get_crieria.value('path') is None:
+            return False
+        if (self.get_crieria.value('extension') is not None) \
+                and self.get_criteria_value('asset_type') == 'dir':
+            return False
+        if (self.get_crieria.value('owner') is not None) \
+                and self.get_criteria_value('asset_type') == 'dir':
+            return False
+        if (self.get_crieria.value('content') is not None) \
+                and self.get_criteria_value('asset_type') == 'dir':
+            return False
+        return True
 
